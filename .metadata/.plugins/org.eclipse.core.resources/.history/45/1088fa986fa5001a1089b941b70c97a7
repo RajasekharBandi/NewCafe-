@@ -1,0 +1,77 @@
+package com.capgemini.capgeminiCafe.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.capgemini.capgeminiCafe.beans.Employee;
+import com.capgemini.capgeminiCafe.dao.AuthenticationDao;
+import com.capgemini.capgeminiCafe.util.AES;
+
+
+
+@Service("authenticationService")
+public class AuthenticationServiceImpl implements AuthenticationService {
+  
+	@Autowired
+	AuthenticationDao authenticationDao;
+	
+	Employee dummyEmp = new Employee(0,"DummyName","Dummy@Email.com","DummyPassword","9876543210","DummyMagicWord","DummyUser");
+	
+	final String secretKey = "RoronoaZoro";
+//	@Autowired
+//	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	
+	public Employee register(Employee employee) {
+		String encryptedEmpPass = AES.encrypt(employee.getEmpPassword(), secretKey);
+		String decryptedEmpPass = AES.decrypt(encryptedEmpPass, secretKey);
+		System.out.println(encryptedEmpPass+"*******************");
+		System.out.println(decryptedEmpPass+"-------------------");
+		Employee tempEmp = new Employee(employee.getEmpId(),employee.getEmpName(),employee.getEmpEmail(),encryptedEmpPass,employee.getEmpMobileNo(),employee.getEmpMagicWord(),employee.getEmpType());		
+		return authenticationDao.save(tempEmp);
+	}
+
+
+	@Override
+	public Employee userCheck(long empId)throws NullPointerException {
+		Employee checkUser =  authenticationDao.existingUserCheck(empId);
+		if(checkUser == null) {
+			return dummyEmp;
+		}
+		else {
+			return checkUser;
+		}
+	}
+	
+	public Employee login(long empId, String empPassword) {
+		String encryptedEmpPass = AES.encrypt(empPassword, secretKey);
+		System.out.println(encryptedEmpPass+"*******************");
+		Employee user = authenticationDao.login(empId , encryptedEmpPass);
+		String decryptedEmpPass = AES.decrypt(user.getEmpPassword(), secretKey);
+		Employee tempEmp = new Employee(user.getEmpId(),user.getEmpName(),user.getEmpEmail(),decryptedEmpPass,user.getEmpMobileNo(),user.getEmpMagicWord(),user.getEmpType());		
+		System.out.println(tempEmp);
+//		if(user == null) {
+//			return dummyEmp;
+//		}
+//		else
+		{
+			return tempEmp;
+		}
+		
+	}
+
+	@Override
+	public Employee forgetPassword(long empId, String empMagicWord) {
+		Employee user = authenticationDao.forgetPassword(empId , empMagicWord);
+		if(user == null) {
+			return dummyEmp;
+		}
+		else {
+			return user;
+		}
+	}
+
+	
+
+}

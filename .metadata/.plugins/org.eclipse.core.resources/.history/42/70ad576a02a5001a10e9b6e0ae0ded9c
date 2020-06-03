@@ -1,0 +1,51 @@
+package com.capgemini.lastMile.service.impl;
+
+import java.util.List;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.capgemini.lastMile.entity.Reviews;
+
+import com.capgemini.lastMile.repository.ReviewRepository;
+
+import com.capgemini.lastMile.service.ReviewService;
+
+/**
+ * @author Sowrasree Banerjee
+ *
+ */
+@Service
+public class ReviewServiceImpl implements ReviewService{
+	
+	@Autowired
+	 private ReviewRepository reviewRepository;
+	 
+	 public void setReviewRepository(ReviewRepository reviewRepository) {
+	  this.reviewRepository = reviewRepository;
+	 }
+	  
+	 public List<Reviews> retrieveReviews() {
+	  List<Reviews> reviews= reviewRepository.findAll();
+	  return reviews;
+	 }
+	  
+	 public Reviews getReviews(Long review_id) {
+	  Optional<Reviews> optReviews = reviewRepository.findById(review_id);
+	  return optReviews.get();
+	 }
+	  
+	 public void saveReviews(Reviews reviews){
+	  reviewRepository.save(reviews);
+	 }
+	  
+	 public void deleteReviews(Long review_id){
+	  reviewRepository.deleteById(review_id);;
+	 }
+	  
+	 public void updateReviews(Reviews reviews) {
+	  reviewRepository.save(reviews);
+	 }
+
+
+}

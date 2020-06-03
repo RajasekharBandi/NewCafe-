@@ -1,0 +1,6 @@
+package com.capgemini.capgeminiCafe;
+
+public class TestApp extends CapgeminiCafeApplicationTests {
+	
+
+}

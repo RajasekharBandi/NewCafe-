@@ -1,0 +1,72 @@
+package com.capgemini.capgeminiCafe.controller;
+
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.capgemini.lastMile.entity.Reviews;
+import com.capgemini.lastMile.service.ReviewService;
+ 
+
+
+@SuppressWarnings("unused")
+@CrossOrigin(origins = "http://localhost:4200")
+@RestController
+public class ReviewRestController {
+	
+	  
+	 @Autowired
+	 private ReviewService reviewService;
+	  
+	 public void setReviewService(ReviewService reviewService) {
+	  this.reviewService = reviewService;
+	 }
+	 
+	 @GetMapping("/api/reviews/all")
+	 public List<Reviews> getreviews() {
+	  List<Reviews> reviews = reviewService.retrieveReviews();
+	  return reviews;
+	 }
+	 
+	 @GetMapping("/api/reviews/{rating_id}")
+	 public Reviews getReviews(@PathVariable(name="rating_id")Long rating_id) {
+	  return reviewService.getReviews(rating_id);
+	 }
+	 
+	 @PostMapping("/api/reviews")
+	 public Reviews saveReviews(@Valid @RequestBody Reviews reviews){
+	  reviewService.saveReviews(reviews);
+	  return reviews;
+	  //System.out.println("Review Saved Successfully");
+	 }
+	  
+	 @DeleteMapping("/api/reviews/{rating_id}")
+	 public void deleteReviews(@PathVariable(name="rating_id")Long rating_id){
+	  reviewService.deleteReviews(rating_id);
+	  System.out.println("Review Deleted Successfully");
+	 }
+	  
+	 @PutMapping("/api/reviews/{rating_id}")
+	 public void updateReviews(@RequestBody Reviews reviews,
+	   @PathVariable(name="rating_id")Long rating_id){
+	  Reviews rev = reviewService.getReviews(rating_id);
+	  if(rev != null){
+	   reviewService.updateReviews(reviews);
+	  }
+	   
+	 }
+	
+
+}

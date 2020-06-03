@@ -1,0 +1,10 @@
+package com.capgemini.lastMile.repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import com.capgemini.lastMile.entity.RequestResponse;
+
+@Repository
+public interface RequestResponseRepository extends JpaRepository<RequestResponse,Long>{
+
+
+}

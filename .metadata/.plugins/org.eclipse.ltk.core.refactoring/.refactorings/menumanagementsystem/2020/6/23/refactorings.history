@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;MenuController.java&apos; to &apos;capgeminiCafe/src/main/java/com.capgemini.capgeminiCafe.controller&apos;&#x0D;&#x0A;- Original project: &apos;menumanagementsystem&apos;&#x0D;&#x0A;- Destination element: &apos;capgeminiCafe/src/main/java/com.capgemini.capgeminiCafe.controller&apos;&#x0D;&#x0A;- Original element: &apos;com.cg.menumanagementsystem.controller.MenuController.java&apos;" description="Copy compilation unit" destination="=capgeminiCafe/src\/main\/java&lt;com.capgemini.capgeminiCafe.controller" element1="/src\/main\/java&lt;com.cg.menumanagementsystem.controller{MenuController.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1591130119383" units="1" version="1.0"/>
+</session>

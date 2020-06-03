@@ -1,0 +1,12 @@
+package com.capgemini.lastMile.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.capgemini.lastMile.entity.Reviews;
+
+@Repository
+public interface ReviewRepository extends JpaRepository<Reviews,Long>{
+
+
+}

@@ -1,0 +1,54 @@
+package com.capgemini.capgeminiCafe.service;
+
+import java.util.List;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.capgemini.lastMile.entity.RequestResponse;
+import com.capgemini.lastMile.repository.RequestResponseRepository;
+import com.capgemini.lastMile.service.RequestResponseService;
+
+
+
+/**
+ * @author Sowrasree Banerjee
+ *
+ */
+
+@Service
+public class RequestResponseServiceImpl implements RequestResponseService {
+	
+	@Autowired
+	 private RequestResponseRepository requestResponseRepository;
+	 
+	 public void setRequestResponseRepository(RequestResponseRepository requestResponseRepository) {
+	  this.requestResponseRepository = requestResponseRepository;
+	 }
+	  
+	 public List<RequestResponse> retrieveRequestResponses() {
+	  List<RequestResponse> requestResponse= requestResponseRepository.findAll();
+	  return requestResponse;
+	 }
+	  
+	 public RequestResponse getRequestResponse(Long message_id) {
+	  Optional<RequestResponse> optRequestResponse = requestResponseRepository.findById(message_id);
+	  return optRequestResponse.get();
+	 }
+	  
+	 public void saveRequestResponse(RequestResponse requestResponse){
+		 requestResponseRepository.save(requestResponse);
+	 }
+	  
+	 public void deleteRequestResponse(Long message_id){
+		 requestResponseRepository.deleteById(message_id);;
+	 }
+	  
+	 public void updateRequestResponse(RequestResponse requestResponse) {
+		 requestResponseRepository.save(requestResponse);
+	 }
+
+
+
+
+}

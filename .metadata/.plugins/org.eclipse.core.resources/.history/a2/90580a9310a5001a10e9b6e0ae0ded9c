@@ -1,0 +1,52 @@
+/**
+ * 
+ */
+package com.cg.menumanagementsystem.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.cg.menumanagementsystem.model.Menu;
+import com.cg.menumanagementsystem.service.MenuServiceImpl;
+
+/**
+ * @author vishw
+ *
+ */
+@RestController
+@RequestMapping("/menu")
+public class MenuController {
+	
+	@Autowired
+	private  MenuServiceImpl service;
+	
+	@PostMapping("/add-item")
+	public Menu addItem(@RequestBody Menu menu) {
+		return service.addItem(menu);
+	}
+	
+	@GetMapping("/view-all-items")
+	public List<Menu> viewAll(){
+		return service.viewItem();
+	}
+	
+	@DeleteMapping("/delete-byId/{id}")
+	public void deleteItem(@PathVariable int id) {
+		service.deleteItem(id);
+	}
+	
+	@PutMapping("/update-item")
+	public Menu updateMenu(@RequestBody Menu menu) {
+		return service.updateMenu(menu);
+	}
+
+}

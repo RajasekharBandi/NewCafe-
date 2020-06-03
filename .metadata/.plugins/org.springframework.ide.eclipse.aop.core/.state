@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aop-reference-model>
+<aop-project name="cafemanagementsystem"/>
+<aop-project name="capgeminiCafe"/>
+<aop-project name="menumanagementsystem"/>
+</aop-reference-model>

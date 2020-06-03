@@ -1,0 +1,73 @@
+package com.capgemini.capgeminiCafe;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.capgemini.lastMile.entity.RequestResponse;
+import com.capgemini.lastMile.entity.Ticket;
+
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = CapgeminiCafeApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class RequestResponseTest {
+
+        @Autowired
+        private TestRestTemplate restTemplate;
+        @LocalServerPort
+        private int port;
+
+        private String getRootUrl() {
+                return "http://localhost:" + port;
+        }
+
+        @Test
+        public void contextLoads() {
+        }
+
+        @Test
+        public void testGetAllRequestResponses() {
+                HttpHeaders headers = new HttpHeaders();
+                HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+                ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/api/requestresponses/all", HttpMethod.GET, entity,
+                                String.class);
+                Assert.assertNotNull(response.getBody());
+        }
+
+        @Test
+        public void testGetRequestResponseById() {
+                RequestResponse requestresponse = restTemplate.getForObject(getRootUrl() + "/api/requestresponses/1", RequestResponse.class);
+                Assert.assertNotNull(requestresponse);
+        }
+       
+        @Test
+        public void testAddRequestResponse() {
+                RequestResponse requestresponse = new RequestResponse();
+                Ticket ticket = restTemplate.getForObject(getRootUrl() + "/api/tickets/1", Ticket.class);
+                ticket.setTicket_number(ticket.getTicket_number());
+                requestresponse.setMessage("It will be delivered in two days");
+                requestresponse.setQuery("My orders are not delivered yet");
+                requestresponse.setType("General Query");
+                
+                ResponseEntity<RequestResponse> postResponse = restTemplate.postForEntity(getRootUrl() + "/api/requsetresponses", requestresponse, RequestResponse.class);
+                Assert.assertNotNull(postResponse);
+                Assert.assertNotNull(postResponse.getBody());
+        }
+
+        @Test
+        public void testUpdateTicket() {
+                int message_id = 1;
+                restTemplate.put(getRootUrl() + "/api/tickets/" + message_id, new Double(100));
+                RequestResponse updatedRequestResponses = restTemplate.getForObject(getRootUrl() + "/api/tickets/" + message_id, RequestResponse.class);
+                Assert.assertNotNull(updatedRequestResponses);
+        }
+}

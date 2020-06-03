@@ -1,0 +1,54 @@
+package com.capgemini.capgeminiCafe.service;
+
+import java.util.List;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.capgemini.lastMile.entity.Ticket;
+
+import com.capgemini.lastMile.repository.TicketRepository;
+
+import com.capgemini.lastMile.service.TicketService;
+
+/**
+ * @author Sowrasree Banerjee
+ *
+ */
+
+@Service
+public class TicketServiceImpl implements TicketService{
+	
+	@Autowired
+	 private TicketRepository ticketRepository;
+	 
+	 public void setTicketRepository(TicketRepository ticketRepository) {
+	  this.ticketRepository = ticketRepository;
+	 }
+	  
+	 public List<Ticket> retrieveTickets() {
+	  List<Ticket> ticket= ticketRepository.findAll();
+	  return ticket;
+	 }
+	  
+	 public Ticket getTicket(Long ticket_number) {
+	  Optional<Ticket> optTicket = ticketRepository.findById(ticket_number);
+	  return optTicket.get();
+	 }
+	  
+	 public void saveTicket(Ticket ticket){
+	  ticketRepository.save(ticket);
+	 }
+	  
+	 public void deleteTicket(Long ticket_number){
+	  ticketRepository.deleteById(ticket_number);;
+	 }
+	  
+	 public void updateTicket(Ticket ticket) {
+	  ticketRepository.save(ticket);
+	 }
+
+
+
+
+}

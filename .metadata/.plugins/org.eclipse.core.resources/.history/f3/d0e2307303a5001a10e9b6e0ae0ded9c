@@ -1,0 +1,26 @@
+
+package com.capgemini.capgeminiCafe.service;
+
+import java.util.List;
+
+import com.capgemini.lastMile.entity.Ticket;
+
+
+/**
+* @author JavaSolutionsGuide
+*
+*/
+
+public interface TicketService {
+	
+	 public List<Ticket> retrieveTickets();
+	  
+	 public Ticket getTicket(Long ticket_number);
+	  
+	 public void saveTicket( Ticket  ticket);
+	  
+	 public void deleteTicket(Long ticket_number);
+	  
+	 public void updateTicket( Ticket  ticket);
+
+}

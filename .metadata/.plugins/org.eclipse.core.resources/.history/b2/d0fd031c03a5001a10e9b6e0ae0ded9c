@@ -1,0 +1,52 @@
+package com.capgemini.capgeminiCafe.service;
+
+import java.util.List;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.capgemini.lastMile.entity.CafeMenu;
+
+import com.capgemini.lastMile.repository.CafeMenuRepository;
+
+import com.capgemini.lastMile.service.CafeMenuService;
+
+/**
+ * @author Sowrasree Banerjee
+ *
+ */
+
+@Service
+public class CafeMenuServiceImpl implements CafeMenuService{
+	
+	@Autowired
+	 private CafeMenuRepository cafeMenuRepository;
+	 
+	 public void setCafeMenuRepository(CafeMenuRepository cafeMenuRepository) {
+	  this.cafeMenuRepository = cafeMenuRepository;
+	 }
+	  
+	 public List<CafeMenu> retrieveCafeMenus() {
+	  List<CafeMenu> cafeMenu= cafeMenuRepository.findAll();
+	  return cafeMenu;
+	 }
+	  
+	 public CafeMenu getCafeMenu(Long item_id) {
+	  Optional<CafeMenu> optCafeMenu = cafeMenuRepository.findById(item_id);
+	  return optCafeMenu.get();
+	 }
+	  
+	 public void saveCafeMenu(CafeMenu cafeMenu){
+	  cafeMenuRepository.save(cafeMenu);
+	 }
+	  
+	 public void deleteCafeMenu(Long item_id){
+	  cafeMenuRepository.deleteById(item_id);;
+	 }
+	  
+	 public void updateCafeMenu(CafeMenu cafeMenu) {
+	  cafeMenuRepository.save(cafeMenu);
+	 }
+
+
+}
