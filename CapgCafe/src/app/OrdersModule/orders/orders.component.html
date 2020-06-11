@@ -1,0 +1,343 @@
+<!-- Developed by: Shivam Tewari-->
+<!--Creation Date: 2020/06/01-->
+
+<br> <br> <br>
+<!doctype html>
+<html lang="en">
+<style>
+  body {
+    background-image: url('../assets/images/order.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-left: 30px;
+    margin-top: 10px;
+    height: 100%;
+
+  }
+</style>
+
+<body>
+  <div class="row">
+    <div class="col-md-3 col-lg-2 ml-0 pl-0 pt-0 pr-0 border-right left-menu">
+      <div class="p-2">
+        <h5>
+          Orders <span class="badge badge-secondary float-right">{{orders.length}}</span>
+        </h5>
+      </div>
+      <div class="p-2 border-top">
+        <h5>View</h5>
+      </div>
+      <div class="px-2">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="viewEMpId" [(ngModel)]="viewOrdersCheckBoxes.empId">
+          <label class="form-check-label" for="viewOrderId">
+            Employee ID
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="viewOrderId" [(ngModel)]="viewOrdersCheckBoxes.order_id">
+          <label class="form-check-label" for="viewOrderId">
+            Order ID
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="viewPaymentType"
+            [(ngModel)]="viewOrdersCheckBoxes.payment_type">
+          <label class="form-check-label" for="viewOrdersLocation">
+            Payment Type
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="viewOrdersLocation"
+            [(ngModel)]="viewOrdersCheckBoxes.order_date">
+          <label class="form-check-label" for="viewOrdersLocation">
+            Order Date
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="viewOrderLocation"
+            [(ngModel)]="viewOrdersCheckBoxes.order_location">
+          <label class="form-check-label" for="viewOrdersLocation">
+            Order Location
+          </label>
+        </div>
+        <div class="form-group my-2">
+          <button class="btn btn-secondary btn-sm mr-1" (click)="onViewSelectAllClick()">Select All</button>
+          <button class="btn btn-secondary btn-sm" (click)="onViewDeselectAllClick()">Deselect All</button>
+        </div>
+      </div>
+
+      <div class="p-2 border-top mt-4">
+        <h5>Sort by</h5>
+      </div>
+      <div class="px-2">
+        <div class="form-group">
+          <select class="form-control" [(ngModel)]="sortBy">
+            <option value="empId">Employee ID</option>
+            <option value="order_id">Order ID</option>
+            <option value="payment_type">Payment Type</option>
+            <option value="order_date">Order date</option>
+            <option value="order_location">Order Location</option>
+          </select>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="sortAscending" value="ASC" [(ngModel)]="sortDirection">
+          <label class="form-check-label" for="sortAscending">
+            Ascending
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="sortDescending" value="DESC" [(ngModel)]="sortDirection">
+          <label class="form-check-label" for="sortDescending">
+            Descending
+          </label>
+        </div>
+        <div class="form-group my-2">
+          <button class="btn btn-secondary btn-sm mr-1 px-3" (click)="onBtnSortClick()">Sort</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-9 col-lg-10">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+            Orders
+            <i class="fa fa-circle-o-notch  fa-spin" *ngIf="showOrdersSpinner"></i>
+          </li>
+        </ol>
+      </nav>
+      <table class="table mt-2">
+        <thead>
+          <tr class="table-secondary">
+            <th *ngIf="viewOrdersCheckBoxes.empId">Employee ID</th>
+            <th *ngIf="viewOrdersCheckBoxes.order_id">Order ID</th>
+            <th *ngIf="viewOrdersCheckBoxes.payment_type">Payment Type</th>
+            <th *ngIf="viewOrdersCheckBoxes.order_date">Order Date</th>
+            <th *ngIf="viewOrdersCheckBoxes.order_location">Order Location</th>
+            <th class="text-secondary">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders; let index = index">
+            <td style="font-size:120%" *ngIf="viewOrdersCheckBoxes.empId">{{order.empId}}</td>
+            <td *ngIf="viewOrdersCheckBoxes.order_id">{{order.order_id}}</td>
+            <td *ngIf="viewOrdersCheckBoxes.payment_type">{{order.payment_type}}</td>
+            <td *ngIf="viewOrdersCheckBoxes.order_date">{{order.order_date}}</td>
+            <td *ngIf="viewOrdersCheckBoxes.order_location">{{order.order_location}}</td>
+            <td>
+              <div class="btn-group">
+                <button class="btn btn-primary" data-toggle="modal" (click)="onViewOrderDetailsClick(index)">Add/View
+                  Items in Order</button>
+                <button class="btn btn-secondary" data-toggle="modal" data-target="#editOrdersModal"
+                  (click)="onEditOrdersClick(index)">Edit</button>
+                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteOrdersModal"
+                  (click)="onDeleteOrdersClick(index)">Delete</button>
+                <button class="btn btn-primary" data-toggle="modal" (click)="onRaiseTicketClick(index)">Raise
+                  Ticket</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class=btn-group>
+        <a class="btn btn-primary" data-toggle="modal" href="#newOrdersModal" (click)="onCreateOrdersClick()">Add
+          Orders</a>
+      </div>
+    </div>
+  </div>
+</body>
+
+
+<!-- New Orders Modal -->
+<form [formGroup]="newOrdersForm">
+  <div class="modal fade" id="newOrdersModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title">Add Orders</h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group form-row">
+            <label for="order_location" class="col-form-label col-md-4">Order Location: </label>
+            <div class="col-md-8">
+              <select placeholder="Order Location" class="form-control" id="order_location"
+                formControlName="order_location">
+                <option readonly="readonly">Please Select</option>
+                <option>Airoli</option>
+                <option>Bhubaneshwar</option>
+                <option>Chennai</option>
+                <option>Delhi</option>
+                <option>Gandhinagar</option>
+                <option>Ghaziabad</option>
+                <option>Gurugram</option>
+                <option>Hyderabad</option>
+                <option>Jaipur</option>
+                <option>Kharagpur</option>
+                <option>Kolkata</option>
+                <option>Lucknow</option>
+                <option>Mumbai</option>
+                <option>Noida</option>
+                <option>Pune</option>
+                <option>Salem</option>
+                <option>Vikhroli</option>
+              </select>
+              <small class="form-text text-muted">Location where the order is made</small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('order_location', 'required', newOrdersForm)">{{getFormControlErrorMessage('order_location', 'required')}}</span>
+            </div>
+          </div>
+          <!-- <div class="form-group form-row">
+            <label for="order_date" class="col-form-label col-md-4">Order Date:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="Order Date" class="form-control" id="order_date"
+                formControlName="order_date"
+                [ngClass]="getFormControlCssClass(newOrdersForm.get('order_date'), newOrdersForm)" />
+              <small class="form-text text-muted">Date of Order</small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('order_date', 'required', newOrdersForm)">{{getFormControlErrorMessage('order_date', 'required')}}</span>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('order_date', 'Date', newOrdersForm)">{{getFormControlErrorMessage('order_date', 'Date')}}</span>
+            </div>
+          </div> -->
+          <div class="form-group form-row">
+            <label for="payment_type" class="col-form-label col-md-4">Payment Type:</label>
+            <div class="col-md-8">
+              <select placeholder="payment_type" class="form-control" id="payment_type" formControlName="payment_type">
+                <option readonly="readonly">Please Select</option>
+                <option>Cash</option>
+                <option>Credit Card</option>
+                <option>Debit Card</option>
+                <option>Meal Card</option>
+                <option>Paytm Wallet</option>
+                <option>UPI</option>
+              </select>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('payment_type', 'required', newOrdersForm)">{{getFormControlErrorMessage('payment_type', 'required')}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnAddOrdersCancel">
+            <i class="fa fa-times-circle"></i> Cancel
+          </button>
+          <button type="submit" class="btn btn-success" (click)="onAddOrdersClick($event)"
+            [disabled]="newOrdersDisabled">
+            <span *ngIf="!newOrdersDisabled"><i class="fa fa-save"></i> Save</span>
+            <span *ngIf="newOrdersDisabled"><i class="fa fa-circle-o-notch  fa-spin"></i> Saving</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- Edit Orders Modal -->
+<form [formGroup]="editOrderForm">
+  <div class="modal fade" id="editOrdersModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title">Edit Orders </h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group form-row">
+            <label for="order_location" class="col-form-label col-md-4">Order Location: </label>
+            <div class="col-md-8">
+              <input type="text" placeholder="order_location" class="form-control" id="order_location"
+                formControlName="order_location"
+                [ngClass]="getFormControlCssClass(newOrdersForm.get('order_location'), newOrdersForm)" />
+              <small class="form-text text-muted">Write Location no numbers, only alphabets allowed.</small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('order_location', 'required', newOrdersForm)">{{getFormControlErrorMessage('order_location', 'required')}}</span>
+            </div>
+          </div>
+          <div class="form-group form-row">
+            <label for="order_date" class="col-form-label col-md-4">Order Date:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="order_date" class="form-control" id="order_date"
+                formControlName="order_date"
+                [ngClass]="getFormControlCssClass(newOrdersForm.get('order_date'), newOrdersForm)" />
+              <small class="form-text text-muted">Date of Order</small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('order_date', 'required', newOrdersForm)">{{getFormControlErrorMessage('order_date', 'required')}}</span>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('order_date', 'Date', newOrdersForm)">{{getFormControlErrorMessage('order_date', 'Date')}}</span>
+            </div>
+          </div>
+          <div class="form-group form-row">
+            <label for="payment_type" class="col-form-label col-md-4">Payment Type:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="payment_type" class="form-control" id="payment_type"
+                formControlName="payment_type"
+                [ngClass]="getFormControlCssClass(newOrdersForm.get('payment_type'), newOrdersForm)" />
+              <small class="form-text text-muted">Type of Payment made</small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('payment_type', 'required', newOrdersForm)">{{getFormControlErrorMessage('payment_type', 'required')}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnUpdateOrdersCancel">
+            <i class="fa fa-times-circle"></i> Cancel
+          </button>
+          <button type="submit" class="btn btn-success" (click)="onUpdateOrdersClick($event)"
+            [disabled]="editOrderDisabled">
+            <span *ngIf="!editOrderDisabled"><i class="fa fa-save"></i> Save</span>
+            <span *ngIf="editOrderDisabled"><i class="fa fa-circle-o-notch  fa-spin"></i> Saving</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+<!--Delete Orders Modal-->
+<form [formGroup]="deleteOrderForm">
+  <div class="modal fade" id="deleteOrdersModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title">Delete Orders</h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h5 class="mb-4">Are you sure to delete this Order?</h5>
+          <div class="form-group form-row">
+            <label for="order_id" class="col-form-label col-md-4">Order Id:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="Order Id" readonly="readonly" class="form-control-plaintext" id="order_id"
+                formControlName="order_id" />
+            </div>
+          </div>
+          <div class="form-group form-row">
+            <label for="order_id" class="col-form-label col-md-4">Order Date:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="Order Date" readonly="readonly" class="form-control-plaintext"
+                id="order_id" formControlName="order_date" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnDeleteOrderCancel">
+            <i class="fa fa-times-circle"></i> Cancel
+          </button>
+          <button type="submit" class="btn btn-danger" (click)="onDeleteOrderConfirmClick($event)"
+            [disabled]="deleteOrderDisabled">
+            <span *ngIf="!deleteOrderDisabled"><i class="fa fa-save"></i> Delete</span>
+            <span *ngIf="deleteOrderDisabled"><i class="fa fa-circle-o-notch  fa-spin"></i> Deleting</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

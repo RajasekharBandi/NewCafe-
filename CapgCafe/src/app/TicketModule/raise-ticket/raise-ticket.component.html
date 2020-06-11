@@ -1,0 +1,342 @@
+<!-- Developed by: Sowrasree banerjee-->
+<!--Creation Date: 2020/06/01-->
+<!--Last Modified Date: 2020/05/02-->
+
+
+<br> <br> <br>
+<!doctype html>
+<html lang="en">
+<style>
+  body {
+    background-image: url('../assets/images/raiseTicket.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-left: 30px;
+    margin-top: 10px;
+
+  }
+</style>
+
+<body>
+  <div class="row">
+    <div class="col-md-3 col-lg-2 ml-0 pl-0 pt-0 pr-0 border-right left-menu">
+      <div class="p-2">
+        <h5>
+          Tickets <span class="badge badge-secondary float-right">{{tickets.length}}</span>
+        </h5>
+      </div>
+      <div class="list-group mb-5">
+        <a class="list-group-item list-group-item-action list-group-item-primary" data-toggle="modal"
+          href="#newTicketModal" (click)="onCreateTicketClick()">Raise Ticket</a>
+      </div>
+      <div class="p-2 border-top">
+        <h5>View</h5>
+      </div>
+      <div class="px-2">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="viewOrderId" [(ngModel)]="viewTicketCheckBoxes.order_id">
+          <label class="form-check-label" for="viewOrderId">
+            Order Id
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="viewStatus" [(ngModel)]="viewTicketCheckBoxes.status">
+          <label class="form-check-label" for="viewStatus">
+            Status
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="viewTicketDate"
+            [(ngModel)]="viewTicketCheckBoxes.ticket_date">
+          <label class="form-check-label" for="viewTicketDate">
+            Ticket Date
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="viewTicketLocation"
+            [(ngModel)]="viewTicketCheckBoxes.ticket_location">
+          <label class="form-check-label" for="viewTicketLocation">
+            Ticket Location
+          </label>
+        </div>
+        <div class="form-group my-2">
+          <button class="btn btn-secondary btn-sm mr-1" (click)="onViewSelectAllClick()">Select All</button>
+          <button class="btn btn-secondary btn-sm" (click)="onViewDeselectAllClick()">Deselect All</button>
+        </div>
+      </div>
+
+      <div class="p-2 border-top mt-4">
+        <h5>Sort by</h5>
+      </div>
+      <div class="px-2">
+        <div class="form-group">
+          <select class="form-control" [(ngModel)]="sortBy">
+            <option value="order_id">Order Id</option>
+            <option value="status">Status</option>
+            <option value="ticket_date">Ticket Date</option>
+            <option value="ticket_location">Ticket Location</option>
+          </select>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="sortAscending" value="ASC" [(ngModel)]="sortDirection">
+          <label class="form-check-label" for="sortAscending">
+            Ascending
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="sortDescending" value="DESC" [(ngModel)]="sortDirection">
+          <label class="form-check-label" for="sortDescending">
+            Descending
+          </label>
+        </div>
+        <div class="form-group my-2">
+          <button class="btn btn-secondary btn-sm mr-1 px-3" (click)="onBtnSortClick()">Sort</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-9 col-lg-10">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+            Tickets
+            <i class="fa fa-circle-o-notch  fa-spin" *ngIf="showTicketSpinner"></i>
+          </li>
+        </ol>
+      </nav>
+      <!--<h4>Distributors </h4>-->
+      <!--<button class="btn btn-primary" data-toggle="modal" data-target="#newDistributorModal" (click)="onCreateDistributorClick()">Create Distributor</button>-->
+      <table class="table mt-2">
+        <thead>
+          <tr class="table-secondary">
+
+            <th *ngIf="viewTicketCheckBoxes.order_id">Employee Id</th>
+            <th *ngIf="viewTicketCheckBoxes.order_id">Order Id</th>
+            <th *ngIf="viewTicketCheckBoxes.status">Status</th>
+            <th *ngIf="viewTicketCheckBoxes.ticket_date">Ticket Date</th>
+            <th *ngIf="viewTicketCheckBoxes.ticket_location">Ticket Location</th>
+            <th class="text-secondary">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ticket of tickets; let index = index">
+
+            <td style="font-size:120%" *ngIf="viewTicketCheckBoxes.order_id">{{ticket.empId}}</td>
+            <td style="font-size:120%" *ngIf="viewTicketCheckBoxes.order_id">{{ticket.order_id}}</td>
+            <td *ngIf="viewTicketCheckBoxes.status">{{ticket.status}}</td>
+            <td *ngIf="viewTicketCheckBoxes.ticket_date">{{ticket.ticket_date}}</td>
+            <td *ngIf="viewTicketCheckBoxes.ticket_location">{{ticket.ticket_location}}</td>
+            <td>
+              <div class="btn-group">
+                <button class="btn btn-secondary" data-toggle="modal" data-target="#editTicketModal"
+                  (click)="onEditTicketClick(index)">Edit</button>
+                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteTicketModal"
+                  (click)="onDeleteTicketClick(index)">Delete</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+
+
+<!-- New Ticket Modal -->
+<form [formGroup]="newTicketForm">
+  <div class="modal fade" id="newTicketModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title">Raise Ticket</h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group form-row">
+            <label for="status" class="col-form-label col-md-4">Status:</label>
+            <div class="col-md-8">
+                <select placeholder="status" class="form-control" id="status"
+                  formControlName="status">
+                  <option readonly="readonly">Please Select</option>
+                  <option>Resolved</option>
+                  <option>Unresolved</option>
+              </select>
+              <small class="form-text text-muted">Status of the ticket. </small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('status', 'required', newTicketForm)">{{getFormControlErrorMessage('status', 'required')}}</span>
+            </div>
+          </div>
+
+          <div class="form-group form-row">
+            <label for="ticket_date" class="col-form-label col-md-4">Ticket Date:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="ticket date" class="form-control" id="ticket_date"
+                formControlName="ticket_date"
+                [ngClass]="getFormControlCssClass(newTicketForm.get('ticket_date'), newTicketForm)" />
+              <small class="form-text text-muted">Date of Raising the Ticket</small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('ticket_date', 'required', newTicketForm)">{{getFormControlErrorMessage('ticket_date', 'required')}}</span>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('ticket_date', 'Date', newTicketForm)">{{getFormControlErrorMessage('ticket_date', 'Date')}}</span>
+            </div>
+          </div>
+          <div class="form-group form-row">
+            <label for="ticket_location" class="col-form-label col-md-4">Ticket Location:</label>
+            <div class="col-md-8">
+              <input type="ticket_location" placeholder="ticket location" class="form-control" id="ticket_location"
+                formControlName="ticket_location"
+                [ngClass]="getFormControlCssClass(newTicketForm.get('ticket_location'), newTicketForm)" />
+              <small class="form-text text-muted">Write Location no numbers, only alphabets allowed.</small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('ticket_location', 'required', newTicketForm)">{{getFormControlErrorMessage('ticket_location', 'required')}}</span>
+            </div>
+          </div>
+
+          <!-- <div class="form-group form-row">
+            <label for="order_id" class="col-form-label col-md-4">Order Id: </label>
+            <div class="col-md-8">
+              <input type="text" placeholder="Order Id" class="form-control" id="order_id" formControlName="order_id"
+                [ngClass]="getFormControlCssClass(newTicketForm.get('order_id'), newTicketForm)" />
+              <small class="form-text text-muted">Order Id</small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('order_id', 'required', newTicketForm)">{{getFormControlErrorMessage('order_id', 'required')}}</span>
+            </div>
+          </div> -->
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnAddTicketCancel">
+            <i class="fa fa-times-circle"></i> Cancel
+          </button>
+          <button type="submit" class="btn btn-success" (click)="onAddTicketClick($event)"
+            [disabled]="newTicketDisabled">
+            <span *ngIf="!newTicketDisabled"><i class="fa fa-save"></i> Save</span>
+            <span *ngIf="newTicketDisabled"><i class="fa fa-circle-o-notch  fa-spin"></i> Saving</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- Edit Ticket Modal -->
+<form [formGroup]="editTicketForm">
+  <div class="modal fade" id="editTicketModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title">Edit Ticket </h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group form-row">
+            <label for="order_id" class="col-form-label col-md-4">Order Id:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="order_id" class="form-control" id="order_id" formControlName="order_id"
+                [ngClass]="getFormControlCssClass(editTicketForm.get('order_id'), editTicketForm)" />
+              <small class="form-text text-muted">Order Id</small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('order_id', 'required', editTicketForm)">{{getFormControlErrorMessage('order_id', 'required')}}</span>
+            </div>
+          </div>
+          <div class="form-group form-row">
+            <label for="status" class="col-form-label col-md-4">Status:</label>
+            <div class="col-md-8">
+              <select placeholder="status" class="form-control" id="status"
+              formControlName="status">
+              <option readonly="readonly">Please Select</option>
+              <option>Resolved</option>
+              <option>Unresolved</option>
+          </select>
+           <small class="form-text text-muted">Resolved/Unresolved</small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('status', 'required', editTicketForm)">{{getFormControlErrorMessage('status', 'required')}}</span>
+            </div>
+          </div>
+
+          <div class="form-group form-row">
+            <label for="ticket_date" class="col-form-label col-md-4">Ticket Date:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="date" class="form-control" id="newticket_date"
+                formControlName="ticket_date"
+                [ngClass]="getFormControlCssClass(editTicketForm.get('ticket_date'), editTicketForm)" />
+              <small class="form-text text-muted">Date of raising the ticket.</small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('ticket_date', 'required', editTicketForm)">{{getFormControlErrorMessage('ticket_date', 'required')}}</span>
+            </div>
+          </div>
+
+          <div class="form-group form-row">
+            <label for="ticket_location" class="col-form-label col-md-4">Location:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="ticket_location" class="form-control" id="ticket_location"
+                formControlName="ticket_location"
+                [ngClass]="getFormControlCssClass(editTicketForm.get('ticket_location'), editTicketForm)" />
+              <small class="form-text text-muted">Location</small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('ticket_location', 'required', editTicketForm)">{{getFormControlErrorMessage('ticket_location', 'required')}}</span>
+            </div>
+          </div>
+
+
+
+
+
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnUpdateTicketCancel">
+            <i class="fa fa-times-circle"></i> Cancel
+          </button>
+          <button type="submit" class="btn btn-success" (click)="onUpdateTicketClick($event)"
+            [disabled]="editTicketDisabled">
+            <span *ngIf="!editTicketDisabled"><i class="fa fa-save"></i> Save</span>
+            <span *ngIf="editTicketDisabled"><i class="fa fa-circle-o-notch  fa-spin"></i> Saving</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+<!-- Delete Ticket Modal -->
+<form [formGroup]="deleteTicketForm">
+  <div class="modal fade" id="deleteTicketModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title">Delete Ticket</h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h5 class="mb-4">Are you sure to delete this Ticket?</h5>
+          <div class="form-group form-row">
+            <label for="order_id" class="col-form-label col-md-4">Ticket Number:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="Order Id" readonly="readonly" class="form-control-plaintext" id="order_id"
+                formControlName="ticket_number" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnDeleteTicketCancel">
+            <i class="fa fa-times-circle"></i> Cancel
+          </button>
+          <button type="submit" class="btn btn-danger" (click)="onDeleteTicketConfirmClick($event)"
+            [disabled]="deleteTicketDisabled">
+            <span *ngIf="!deleteTicketDisabled"><i class="fa fa-save"></i> Delete</span>
+            <span *ngIf="deleteTicketDisabled"><i class="fa fa-circle-o-notch  fa-spin"></i> Deleting</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

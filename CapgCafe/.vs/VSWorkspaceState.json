@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\AdminModule",
+    "\\src\\app\\AdminModule\\admin-home",
+    "\\src\\app\\Components",
+    "\\src\\app\\Components\\login",
+    "\\src\\app\\DistributorModule",
+    "\\src\\app\\DistributorModule\\product-order",
+    "\\src\\app\\SystemUserModule\\product"
+  ],
+  "SelectedNode": "\\src\\app\\AdminModule\\admin-home",
+  "PreviewInSolutionExplorer": false
+}

@@ -1,0 +1,14 @@
+
+  section{
+    position: relative;
+  }
+
+.jumbotron {
+    
+    background-image: url("/assets/images/adminDesk.png");
+    background-size: cover;
+    height: 700px;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }

@@ -1,0 +1,473 @@
+<!-- Developed by: Shivam Tewari-->
+<!--Creation Date: 2020/06/01-->
+
+
+<br> <br> <br>
+<!doctype html>
+<html lang="en">
+<style>
+  body {
+    background-image: url('../assets/images/order.png');
+    background-repeat: no-repeat;
+    
+    background-position: center;
+    margin-left: 30px;
+    margin-top: 10px;
+    height:100%;
+
+  }
+</style>
+
+<body>
+  <div class="row">
+    <div class="col-md-3 col-lg-2 ml-0 pl-0 pt-0 pr-0 border-right left-menu">
+      <div class="p-2">
+        <h5>
+          Order Details <span class="badge badge-secondary float-right">{{details1.length}}</span>
+        </h5>
+      </div>
+      <div class="p-2 border-top">
+        <h5>View</h5>
+      </div>
+      <div class="px-2">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="viewOrdersocation"
+            [(ngModel)]="viewDetailsCheckBoxes.item_id">
+          <label class="form-check-label" for="viewOrdersocation">
+            Item ID
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="viewStatus" [(ngModel)]="viewDetailsCheckBoxes.item_name">
+          <label class="form-check-label" for="viewStatus">
+            Item Name
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="viewOrdersLocation"
+            [(ngModel)]="viewDetailsCheckBoxes.itemType">
+          <label class="form-check-label" for="viewOrdersLocation">
+            Item Type
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="viewOrdersLocation"
+            [(ngModel)]="viewDetailsCheckBoxes.item_price">
+          <label class="form-check-label" for="viewOrdersLocation">
+            Item Price
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="viewOrdersLocation"
+            [(ngModel)]="viewDetailsCheckBoxes.quantity">
+          <label class="form-check-label" for="viewOrdersLocation">
+            Quantity
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="viewOrdersDate"
+            [(ngModel)]="viewDetailsCheckBoxes.itemTotal">
+          <label class="form-check-label" for="viewOrdersDate">
+            Total Amount
+          </label>
+        </div>
+        <div class="form-group my-2">
+          <button class="btn btn-secondary btn-sm mr-1" (click)="onViewSelectAllClick()">Select All</button>
+          <button class="btn btn-secondary btn-sm" (click)="onViewDeselectAllClick()">Deselect All</button>
+        </div>
+      </div>
+
+      <div class="p-2 border-top mt-4">
+        <h5>Sort by</h5>
+      </div>
+      <div class="px-2">
+        <div class="form-group">
+          <select class="form-control" [(ngModel)]="sortBy">
+            <option value="item_name">Item Name</option>
+            <option value="itemTotal">Total Amount</option>
+            <option value="itemType">Item Type</option>
+            <option value="item_id">Item ID</option>
+            <option value="item_price">Item Price</option>
+            <option value="quantity">Quantity</option>
+          </select>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="sortAscending" value="ASC" [(ngModel)]="sortDirection">
+          <label class="form-check-label" for="sortAscending">
+            Ascending
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="sortDescending" value="DESC" [(ngModel)]="sortDirection">
+          <label class="form-check-label" for="sortDescending">
+            Descending
+          </label>
+        </div>
+        <div class="form-group my-2">
+          <button class="btn btn-secondary btn-sm mr-1 px-3" (click)="onBtnSortClick()">Sort</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-9 col-lg-10">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+            Order Details
+            <i class="fa fa-circle-o-notch  fa-spin" *ngIf="showDetailsSpinner"></i>
+          </li>
+        </ol>
+      </nav>
+      <!--<h4>Distributors </h4>-->
+      <!--<button class="btn btn-primary" data-toggle="modal" data-target="#newDistributorModal" (click)="onCreateDistributorClick()">Create Distributor</button>-->
+      <table class="table mt-2">
+        <thead>
+          <tr class="table-secondary">
+            <th *ngIf="viewDetailsCheckBoxes.item_id">Item ID</th>
+            <th *ngIf="viewDetailsCheckBoxes.item_name">Item Name</th>
+            <th *ngIf="viewDetailsCheckBoxes.itemType">Item Type</th>
+            <th *ngIf="viewDetailsCheckBoxes.item_price">Item Price</th>
+            <th *ngIf="viewDetailsCheckBoxes.quantity">Quantity</th>
+            <th *ngIf="viewDetailsCheckBoxes.itemTotal">Total Amount</th>
+            <th class="text-secondary">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let detail of details1; let index = index">
+            <td *ngIf="viewDetailsCheckBoxes.item_id">{{detail.item_id}}</td>
+            <td *ngIf="viewDetailsCheckBoxes.item_name">{{detail.item_name}}</td>
+            <td *ngIf="viewDetailsCheckBoxes.itemType">{{detail.itemType}}</td>
+            <td *ngIf="viewDetailsCheckBoxes.item_price">{{detail.item_price}}</td>
+            <td *ngIf="viewDetailsCheckBoxes.quantity">{{detail.quantity}}</td>
+            <td *ngIf="viewDetailsCheckBoxes.itemTotal">{{detail.itemTotal}}</td>
+            <td>
+              <div class="btn-group">
+                <button class="btn btn-secondary" data-toggle="modal" data-target="#editDetailsModal"
+                  (click)="onEditDetailsClick(index)">Edit</button>
+                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteDetailsModal"
+                  (click)="onDeleteDetailsClick(index)">Delete</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="btn-group">
+        <a class="btn btn-primary" data-toggle="modal" href="#newDetailsModal" (click)="onCreateDetailsClick()">Add
+          Items</a>
+      </div>
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      <div class=btn-group>
+        <a class="btn btn-primary" data-toggle="modal" href="#newPaymentModal" (click)="onPlaceOrdersClick()">Place
+          Order</a>
+      </div>
+    </div>
+  </div>
+</body>
+
+
+<!-- New Orders Modal -->
+<form [formGroup]="newDetailsForm">
+  <div class="modal fade" id="newDetailsModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title">Add Order Details</h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group form-row">
+            <label for="item_id" class="col-form-label col-md-4">Item Name:</label>
+            <div class="col-md-8">
+              <select placeholder="Item Name" class="form-control" id="item_id" formControlName="item_id"
+                (change)="onItemDropDownChange(index)">
+                <option readonly="readonly">Please Select</option>
+                <option *ngFor="let cafeMenu of cafeMenus" [value]="cafeMenu.item_id">
+                  {{cafeMenu.item_name}}
+                </option>
+              </select>
+              <small class="form-text text-muted">Item Name</small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('item_id', 'required', newDetailsForm)">{{getFormControlErrorMessage('item_id', 'required')}}</span>
+            </div>
+          </div>
+          <div class="form-group form-row">
+            <label for="itemType" class="col-form-label col-md-4">Item Type: </label>
+            <div class="col-md-8">
+              <input type="text" placeholder="Item Type" class="form-control" id="itemType" formControlName="itemType"
+                readonly="readonly"
+                [ngClass]="getFormControlCssClass(newDetailsForm.get('itemType'), newDetailsForm)" />
+              <small class="form-text text-muted">Write Location no numbers, only alphabets allowed.</small>
+            </div>
+          </div>
+          <div class="form-group form-row">
+            <label for="item_price" class="col-form-label col-md-4">Item Price:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="Item Price" class="form-control" id="item_price"
+                formControlName="item_price" readonly="readonly"
+                [ngClass]="getFormControlCssClass(newDetailsForm.get('item_price'), newDetailsForm)" />
+              <small class="form-text text-muted">Unit Price of selected item</small>
+            </div>
+          </div>
+          <div class="form-group form-row">
+            <label for="quantity" class="col-form-label col-md-4">Quantity:</label>
+            <div class="col-md-8">
+              <input type="number" placeholder="Quantity" class="form-control" id="quantity" formControlName="quantity"
+                min="0" max="1000000" (change)="onQuantityChange(index)" />
+            </div>
+          </div>
+          <div class="form-group form-row">
+            <label for="itemTotal" class="col-form-label col-md-4">Total Amount:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="itemTotal" class="form-control" id="itemTotal" formControlName="itemTotal"
+                [ngClass]="getFormControlCssClass(newDetailsForm.get('itemTotal'), newDetailsForm)" />
+              <small class="form-text text-muted">Total Amount</small>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnAddDetailsCancel">
+            <i class="fa fa-times-circle"></i> Cancel
+          </button>
+          <button type="submit" class="btn btn-success" (click)="onAddDetailsClick($event)"
+            [disabled]="newDetailsDisabled">
+            <span *ngIf="!newDetailsDisabled"><i class="fa fa-save"></i> Save</span>
+            <span *ngIf="newDetailsDisabled"><i class="fa fa-circle-o-notch  fa-spin"></i> Saving</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- New Payment Modal -->
+<form [formGroup]="newPaymentForm">
+  <div class="modal fade" id="newPaymentModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title">Add Payment</h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group form-row">
+            <label for="amount" class="col-form-label col-md-4">Amount:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="Amount" class="form-control" id="amount" formControlName="amount"
+                [ngClass]="getFormControlCssClass(newPaymentForm.get('amount'), newPaymentForm)" />
+              <small class="form-text text-muted">Amount You need to pay</small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('amount', 'required', newPaymentForm)">{{getFormControlErrorMessage('amount', 'required')}}</span>
+            </div>
+          </div>
+          <!-- <div class="form-group form-row">
+            <label for="payment_type" class="col-form-label col-md-4">Payment Type:</label>
+            <div class="col-md-8">
+              <select placeholder="payment_type" class="form-control" id="payment_type" formControlName="payment_type">
+                <option readonly="readonly">Please Select</option>
+                <option>Cash</option>
+                <option>Credit Card</option>
+                <option>Debit Card</option>
+                <option>Meal Card</option>
+                <option>Paytm Wallet</option>
+                <option>UPI</option>
+              </select>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('payment_type', 'required', newPaymentForm)">{{getFormControlErrorMessage('payment_type', 'required')}}</span>
+            </div>
+          </div> -->
+          <div class="form-group form-row">
+            <label for="nameOnCard" class="col-form-label col-md-4">Name On Card:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="Name On Card" class="form-control" id="nameOnCard"
+                formControlName="nameOnCard"
+                [ngClass]="getFormControlCssClass(newPaymentForm.get('nameOnCard'), newPaymentForm)" />
+              <small class="form-text text-muted">Name on card</small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('nameOnCard', 'required', newPaymentForm)">{{getFormControlErrorMessage('nameOnCard', 'required')}}</span>
+            </div>
+          </div>
+          <div class="form-group form-row">
+            <label for="cardNumber" class="col-form-label col-md-4">Card Number:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="Card Number" class="form-control" id="cardNumber"
+                formControlName="cardNumber"
+                [ngClass]="getFormControlCssClass(newPaymentForm.get('cardNumber'), newPaymentForm)" />
+              <small class="form-text text-muted">Card Number</small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('cardNumber', 'required', newPaymentForm)">{{getFormControlErrorMessage('cardNumber', 'required')}}</span>
+            </div>
+          </div>
+          <div class="form-group form-row">
+            <label for="cvv" class="col-form-label col-md-4">CVV</label>
+            <div class="col-md-8">
+              <input type="cvv" placeholder="cvv" class="form-control" id="cvv" formControlName="cvv"
+                [ngClass]="getFormControlCssClass(newPaymentForm.get('cvv'), newPaymentForm)" />
+              <small class="form-text text-muted">Last 3 digits written on the back of your card.</small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('cvv', 'required', newPaymentForm)">{{getFormControlErrorMessage('cvv', 'required')}}</span>
+            </div>
+          </div>
+          <div class="form-group form-row">
+            <label for="mobile" class="col-form-label col-md-4">MOBILE: </label>
+            <div class="col-md-8">
+              <input type="text" placeholder="mobile" class="form-control" id="mobile" formControlName="mobile"
+                [ngClass]="getFormControlCssClass(newPaymentForm.get('mobile'), newPaymentForm)" />
+              <small class="form-text text-muted">Your 10 digit mobile number.</small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('mobile', 'required', newPaymentForm)">{{getFormControlErrorMessage('mobile', 'required')}}</span>
+            </div>
+          </div>
+          <div class="form-group form-row">
+            <label for="otp" class="col-form-label col-md-4">OTP: </label>
+            <div class="col-md-8">
+              <input type="text" placeholder="OTP" class="form-control" id="otp" formControlName="otp"
+                [ngClass]="getFormControlCssClass(newPaymentForm.get('otp'), newPaymentForm)" />
+              <small class="form-text text-muted">OTP is sent to your mobile number</small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('otp', 'required', newPaymentForm)">{{getFormControlErrorMessage('payment', 'required')}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnAddPaymentCancel">
+            <i class="fa fa-times-circle"></i> Cancel
+          </button>
+          <button type="submit" class="btn btn-success" (click)="onAddPaymentClick($event)"
+            [disabled]="newPaymentDisabled">
+            <span *ngIf="!newPaymentDisabled"><i class="fa fa-save"></i> Pay</span>
+            <span *ngIf="newPaymentDisabled"><i class="fa fa-circle-o-notch  fa-spin"></i> Paying</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- Edit Orders Modal -->
+<form [formGroup]="editDetailsForm">
+  <div class="modal fade" id="editDetailsModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title">Edit Orders </h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group form-row">
+            <label for="item_id" class="col-form-label col-md-4">Item ID:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="Item Name" class="form-control" id="item_id" formControlName="item_id"
+                readonly="readonly"
+                [ngClass]="getFormControlCssClass(editDetailsForm.get('item_id'), editDetailsForm)" />
+              <small class="form-text text-muted">Item ID</small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('item_id', 'required', editDetailsForm)">{{getFormControlErrorMessage('item_id', 'required')}}</span>
+            </div>
+          </div>
+          <div class="form-group form-row">
+            <label for="item_name" class="col-form-label col-md-4">Item Name: </label>
+            <div class="col-md-8">
+              <input type="text" placeholder="Item Name" class="form-control" id="item_name" formControlName="item_name"
+                readonly="readonly"
+                [ngClass]="getFormControlCssClass(editDetailsForm.get('item_name'), editDetailsForm)" />
+              <small class="form-text text-muted">Write Location no numbers, only alphabets allowed.</small>
+            </div>
+          </div>
+          <div class="form-group form-row">
+            <label for="itemType" class="col-form-label col-md-4">Item Type: </label>
+            <div class="col-md-8">
+              <input type="text" placeholder="Item Type" class="form-control" id="itemType" formControlName="itemType"
+                readonly="readonly"
+                [ngClass]="getFormControlCssClass(editDetailsForm.get('itemType'), editDetailsForm)" />
+              <small class="form-text text-muted">Write Location no numbers, only alphabets allowed.</small>
+            </div>
+          </div>
+          <div class="form-group form-row">
+            <label for="item_price" class="col-form-label col-md-4">Item Price:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="Item Price" class="form-control" id="item_price"
+                formControlName="item_price" readonly="readonly"
+                [ngClass]="getFormControlCssClass(editDetailsForm.get('item_price'), editDetailsForm)" />
+              <small class="form-text text-muted">Unit Price of selected item</small>
+            </div>
+          </div>
+          <div class="form-group form-row">
+            <label for="quantity" class="col-form-label col-md-4">Quantity:</label>
+            <div class="col-md-8">
+              <input type="number" placeholder="Quantity" class="form-control" id="quantity" formControlName="quantity"
+                min="0" max="1000000" (change)="onQuantityChange1(index)" />
+            </div>
+          </div>
+          <div class="form-group form-row">
+            <label for="itemTotal" class="col-form-label col-md-4">Total Amount:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="itemTotal" class="form-control" id="itemTotal" formControlName="itemTotal"
+                [ngClass]="getFormControlCssClass(editDetailsForm.get('itemTotal'), editDetailsForm)" />
+              <small class="form-text text-muted">Total Amount</small>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnUpdateDetailsCancel">
+            <i class="fa fa-times-circle"></i> Cancel
+          </button>
+          <button type="submit" class="btn btn-success" (click)="onUpdateDetailsClick($event)"
+            [disabled]="editDetailsDisabled">
+            <span *ngIf="!editDetailsDisabled"><i class="fa fa-save"></i> Save</span>
+            <span *ngIf="editDetailsDisabled"><i class="fa fa-circle-o-notch  fa-spin"></i> Saving</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+<!-- Delete Orders Modal -->
+<form [formGroup]="deleteDetailsForm">
+  <div class="modal fade" id="deleteDetailsModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title">Delete Orders</h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h5 class="mb-4">Are you sure to delete this Order?</h5>
+          <div class="form-group form-row">
+            <label for="order_id" class="col-form-label col-md-4">Order Detail Id:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="Order Id" readonly="readonly" class="form-control-plaintext" id="order_id"
+                formControlName="id" />
+            </div>
+          </div>
+          <div class="form-group form-row">
+            <label for="item_name" class="col-form-label col-md-4">Item Name:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="Item Name" readonly="readonly" class="form-control-plaintext"
+                id="item_name" formControlName="item_name" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnDeleteDetailsCancel">
+            <i class="fa fa-times-circle"></i> Cancel
+          </button>
+          <button type="submit" class="btn btn-danger" (click)="onDeleteDetailsConfirmClick($event)"
+            [disabled]="deleteDetailsDisabled">
+            <span *ngIf="!deleteDetailsDisabled"><i class="fa fa-save"></i> Delete</span>
+            <span *ngIf="deleteDetailsDisabled"><i class="fa fa-circle-o-notch  fa-spin"></i> Deleting</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

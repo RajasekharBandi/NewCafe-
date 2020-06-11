@@ -1,0 +1,99 @@
+<div class="jumbotron">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="card" style="height:30rem; width: 40rem;">
+        <h4 class="card-header">Register</h4>
+        <div class="card-body">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div id='parent_div_1'>
+                    <div class="form-group" class='child_div_1'>
+                        <label for="empId">Employee Id</label>
+                        <input type="number" formControlName="empId" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.empId.errors }" />
+                        <div *ngIf="submitted && f.empId.errors" class="invalid-feedback">
+                            <div *ngIf="f.empId.errors.required">Employee Id is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group" class='child_div_2'>
+                        <label for="empName">Employee Name</label>
+                        <input type="text" formControlName="empName" pattern="^[a-zA-Z ]*$" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.empName.errors }" />
+                        <div *ngIf="submitted && f.empName.errors" class="invalid-feedback">
+                            <div *ngIf="f.empName.errors.required">Employee Name is required</div>
+                            <div *ngIf="f.empName.errors.pattern">Employee Name is Invalid</div>
+                        </div>
+                    </div>
+                </div>
+                <div id='parent_div_2'>
+                    <div class="form-group" class='child_div_3'>
+                        <label for="empEmail">Employee Email</label>
+                        <input type="email" formControlName="empEmail"
+                            pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.empEmail.errors }" />
+                        <div *ngIf="submitted && f.empEmail.errors" class="invalid-feedback">
+                            <div *ngIf="f.empEmail.errors.required">Employee Email is required</div>
+                            <div *ngIf="f.empEmail.errors.pattern">Employee Email is Invalid</div>
+                        </div>
+                    </div>
+                    <div class="form-group" class='child_div_4'>
+                        <label for="empPassword">Employee Password</label>
+                        <input type="password" formControlName="empPassword" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.empPassword.errors }" />
+                        <div *ngIf="submitted && f.empPassword.errors" class="invalid-feedback">
+                            <div *ngIf="f.empPassword.errors.required">Password is required</div>
+                            <div *ngIf="f.empPassword.errors.minlength">Password must be at least 6 characters</div>
+                        </div>
+                    </div>
+                </div>
+                <div id='parent_div_3'>
+                    <div class="form-group" class='child_div_5'>
+                        <label for="empMobileNo">Mobile No</label>
+                        <input type="number" formControlName="empMobileNo" pattern="^[6-9]\d{9}$" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.empMobileNo.errors }" />
+                        <div *ngIf="submitted && f.empMobileNo.errors" class="invalid-feedback">
+                            <div *ngIf="f.empMobileNo.errors.required">Employee Mobile No. is required</div>
+                            <div *ngIf="f.empMobileNo.errors.pattern">Employee Mobile No. must start with 7/8/9 and have
+                                10 character</div>
+                            <div *ngIf="f.empMobileNo.errors.minlength">Employee Mobile No. must be at least 10
+                                characters</div>
+                        </div>
+                    </div>
+                    <div class="form-group" class='child_div_6'>
+                        <label for="empMagicWord">Magic Word</label>
+                        <input type="text" formControlName="empMagicWord" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.empMagicWord.errors }" />
+                        <div *ngIf="submitted && f.empMagicWord.errors" class="invalid-feedback">
+                            <div *ngIf="f.empMagicWord.errors.required">Magic Word is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div id='parent_div_4'>
+                    <div class="form-group" class='child_div_8' class="checkbox switcher">
+                        <label for="empType">
+                            <br>
+                            <input type="checkbox" id="empType" value="" checked  (change)="onChange($event.target.checked)" class="form-control"
+                            />
+                            <span><small></small></span>
+                            <small>Register as Admin?</small>
+                        </label>
+                    </div>
+                </div>
+                <div id='parent_div_5'>
+                    <div class="form-group" class='child_div_7'>
+                        <button class="btn btn-primary" routerLink="/login">Cancel</button>
+                        <span> &nbsp;&nbsp;&nbsp;&nbsp; </span>
+                        <button [disabled]="loading" class="btn btn-primary">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                            Register
+                        </button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

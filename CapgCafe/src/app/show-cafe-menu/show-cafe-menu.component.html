@@ -1,0 +1,47 @@
+<div class="jumbotron">
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+    <div class="card" style="height:35rem; width: 37rem;">
+        <!-- <br><br><br><br><br><br><br> -->
+        <h4 class="card-header">Select a Menu From your Choosen Cafe...</h4>
+        <div class="card-body" class="overflow-auto">
+            <div *ngIf="menuList">
+                <div class="manageTile" cols="2">
+                    <table class="table">
+                        <thead>
+                            <tr style="height: 20px; font-size: large;">
+                                <th scope="col">Peek</th>
+                                <th scope="col">Delicacy</th>
+                                <th scope="col">Calories</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let menu of menuList" style="height: 50px;">
+                                <td><img src="{{menu.item_img_path}}" class="rounded-circle" width="60" height="60">
+                                </td>
+                                <td style="font-weight: bolder;">{{menu.item_name}}</td>
+                                <td>{{menu.item_calories}} Cal</td>
+                                <td>{{menu.item_price | currency:'INR'}}</td>
+                                <td><input style="width: 90%;" type="number" min="0" max="10" ></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+
+                <div class="orderButton" *ngIf="menuList">
+                    <button class="btn btn-primary" routerLink="/home">Cancel</button>
+                    <span> &nbsp;&nbsp;&nbsp;&nbsp; </span>
+                    <button class="btn btn-primary">Order </button> </div>
+
+            </div>
+        </div>
+    </div>
+</div>

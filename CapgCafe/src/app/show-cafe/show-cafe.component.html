@@ -1,0 +1,26 @@
+<div class="jumbotron">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="card" style="height:30rem; width: 30rem;">
+        <!-- <br><br><br><br><br><br><br> -->
+        <h4 class="card-header">Select a Cafe From your Location...</h4>
+        <div class="card-body">
+            <br>
+
+            <div *ngIf="cafeListData">
+                <div class="manageTile" cols="2" rowHeight="150px" rowWeight="250px">
+                    <div *ngFor="let cafeList of cafeListData" [routerLink]="['/showmenu',cafeList.cafe_id]">
+                        <img height="150px" title="{{cafeList.cafe_name}}" width="100%"
+                            src="{{cafeList.cafe_image_path}}">
+                            <span><br><br></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

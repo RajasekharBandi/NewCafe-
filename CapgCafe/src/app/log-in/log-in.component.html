@@ -1,0 +1,49 @@
+<div class="jumbotron">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="card" style="height:21rem; width: 32rem;">
+        <!-- <br><br><br><br><br><br><br> -->
+        <h4 class="card-header">Login</h4>
+
+        <div class="card-body">
+
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="empId">Employee Id</label>
+                    <input type="number" formControlName="empId" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && data.empId.errors }" />
+                    <div *ngIf="submitted && data.empId.errors" class="invalid-feedback">
+                        <div *ngIf="data.empId.errors.required">Employee Id is required</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="empPassword">Password</label>
+                    <input type="password" formControlName="empPassword" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && data.empPassword.errors }" />
+                    <div *ngIf="submitted && data.empPassword.errors" class="invalid-feedback">
+                        <div *ngIf="data.empPassword.errors.required">Employee Password is required</div>
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <div class="loginButton"> 
+                        <button class="btn btn-primary" routerLink="/home">Cancel</button>
+                        <span> &nbsp;&nbsp;&nbsp;&nbsp; </span>
+                        <button [disabled]="loading" class="btn btn-primary">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                            Login
+                        </button> </div>
+                    <div class="registerButton"> <a routerLink="/register" class="btn btn-link">Don't have a account ? Wanna Register? </a>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

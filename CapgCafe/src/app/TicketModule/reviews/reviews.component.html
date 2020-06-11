@@ -1,0 +1,516 @@
+
+<!-- Developed by: Sowrasree banerjee-->
+<!--Creation Date: 2020/06/01-->
+<!--Last Modified Date: 2020/05/02-->
+
+
+<br> <br> <br>
+<!doctype html>
+<html lang="en">
+<style>
+  body {
+    background-image: url('../assets/images/raiseTicket.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-left: 30px;
+    margin-top: 10px;
+
+  }
+</style>
+<body>
+<div class="row">
+    <div class="col-md-3 col-lg-2 ml-0 pl-0 pt-0 pr-0 border-right left-menu">
+      <div class="p-2">
+        <h5>
+          Reviews <span class="badge badge-secondary float-right" *ngIf="reviews.length > 0">{{reviews.length}}</span>
+        </h5>
+      </div>
+  
+      <div class="list-group mb-5">
+        <a class="list-group-item list-group-item-action list-group-item-primary" data-toggle="modal" href="#newReviewsModal" (click)="onCreateReviewsClick()">Create Review</a>
+      </div>
+  
+      <div class="p-2 border-top"><h5>View</h5></div>
+      <div class="px-2">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="viewEmpId" [(ngModel)]="viewReviewsCheckBoxes.empId">
+          <label class="form-check-label" for="viewEmpId">
+            Employee Id
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="viewReview_Date" [(ngModel)]="viewReviewsCheckBoxes.review_date">
+          <label class="form-check-label" for="viewReview_Date">
+            Review Date
+          </label>
+        </div>
+  
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="viewRating" [(ngModel)]="viewReviewsCheckBoxes.rating">
+          <label class="form-check-label" for="viewRating">
+            Rating
+          </label>
+        </div>
+  
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="viewReview" [(ngModel)]="viewReviewsCheckBoxes.review">
+          <label class="form-check-label" for="viewReview">
+            Review
+          </label>
+        </div>
+  
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="viewReview_Type" [(ngModel)]="viewReviewsCheckBoxes.review_type">
+          <label class="form-check-label" for="viewReview_Type">
+            Review Type
+          </label>
+        </div>
+  
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="viewCafe_Id" [(ngModel)]="viewReviewsCheckBoxes.cafe_id">
+          <label class="form-check-label" for="viewCafe_Id">
+            Cafe Id
+          </label>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="viewCafe_Location" [(ngModel)]="viewReviewsCheckBoxes.cafe_location">
+            <label class="form-check-label" for="viewCafe_Location">
+                Cafe Location
+            </label>
+          </div>
+
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="viewItem_Id" [(ngModel)]="viewReviewsCheckBoxes.item_id">
+            <label class="form-check-label" for="viewItem_Id">
+                Item Id
+            </label>
+          </div>
+
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="viewItem_Name" [(ngModel)]="viewReviewsCheckBoxes.item_name">
+            <label class="form-check-label" for="viewItem_Name">
+                Item Name
+            </label>
+          </div>
+
+
+
+
+  
+        <div class="form-group my-2">
+          <button class="btn btn-secondary btn-sm mr-1" (click)="onViewSelectAllClick()">Select All</button>
+          <button class="btn btn-secondary btn-sm" (click)="onViewDeselectAllClick()">Deselect All</button>
+        </div>
+      </div>
+  
+  
+  
+      <div class="p-2 border-top mt-4"><h5>Sort by</h5></div>
+      <div class="px-2">
+        <div class="form-group">
+          <select class="form-control" [(ngModel)]="sortBy">
+            
+            <option value="empId">Employee Id</option>
+            <option value="rating">rating</option>
+            <option value="review">review</option>
+            <option value="cafe_location">cafe_location</option>
+            <option value="cafe_id">cafe_id</option>
+            <option value="item_id">item_id</option>
+            <option value="item_name">item_name</option>
+            <option value="user_id">user_id</option>
+          </select>
+        </div>
+  
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="sortAscending" value="ASC" [(ngModel)]="sortDirection">
+          <label class="form-check-label" for="sortAscending">
+            Ascending
+          </label>
+        </div>
+  
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="sortDescending" value="DESC" [(ngModel)]="sortDirection">
+          <label class="form-check-label" for="sortDescending">
+            Descending
+          </label>
+        </div>
+  
+        <div class="form-group my-2">
+          <button class="btn btn-secondary btn-sm mr-1 px-3" (click)="onBtnSortClick()">Sort</button>
+        </div>
+  
+      </div>
+    </div>
+  
+  
+    <div class="col-md-9 col-lg-10">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+            Reviews
+            <i class="fa fa-circle-o-notch  fa-spin" *ngIf="showReviewsSpinner"></i>
+          </li>
+        </ol>
+      </nav>
+  
+      <table class="table mt-2">
+        <thead>
+          <tr class="table-secondary">
+            <th *ngIf="viewReviewsCheckBoxes.empId">Employee Id</th>
+            <th *ngIf="viewReviewsCheckBoxes.review_date">Review Date</th>
+            <th *ngIf="viewReviewsCheckBoxes.rating">Rating</th>
+            <th *ngIf="viewReviewsCheckBoxes.review">Review</th>
+            <th *ngIf="viewReviewsCheckBoxes.review_type">Review Type</th>
+            <th *ngIf="viewReviewsCheckBoxes.cafe_id">Cafe Id</th>
+            <th *ngIf="viewReviewsCheckBoxes.cafe_location">Cafe Location</th>
+            <th *ngIf="viewReviewsCheckBoxes.item_id">Item Id</th>
+            <th *ngIf="viewReviewsCheckBoxes.item_name">Item Name</th>
+
+            <th class="text-secondary">Actions</th>
+          </tr>
+        </thead>
+  
+        <tbody>
+          <tr *ngFor="let review of reviews; let index = index">
+            <td style="font-size:120%" *ngIf="viewReviewsCheckBoxes.review_date">{{review.empId}}</td>
+            <td style="font-size:120%" *ngIf="viewReviewsCheckBoxes.review_date">{{review.review_date}}</td>
+            <td *ngIf="viewReviewsCheckBoxes.rating">{{review.rating}}</td>
+            <td *ngIf="viewReviewsCheckBoxes.review">{{review.review}}</td>
+            <td *ngIf="viewReviewsCheckBoxes.review_type">{{review.review_type}}</td>
+            <td *ngIf="viewReviewsCheckBoxes.cafe_id">{{review.cafe_id}}</td>
+            <td *ngIf="viewReviewsCheckBoxes.cafe_location">{{review.cafe_location}}</td>
+            
+            <td *ngIf="viewReviewsCheckBoxes.item_id">{{review.item_id}}</td>
+            <td *ngIf="viewReviewsCheckBoxes.item_name">{{review.item_name}}</td>
+
+            <td>
+              <div class="btn-group">
+                <button class="btn btn-secondary" data-toggle="modal" data-target="#editReviewsModal" (click)="onEditReviewsClick(index)">Edit</button>
+                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteReviewsModal" (click)="onDeleteReviewsClick(index)">Delete</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+    </div>
+  </div>
+  </body>
+  
+  
+  
+  
+  
+  <!-- New Reviews Modal -->
+  <form [formGroup]="newReviewsForm">
+    <div class="modal fade" id="newReviewsModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-info text-white">
+            <h5 class="modal-title">Add Review</h5>
+            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+  
+          <div class="modal-body">
+  
+            <div class="form-group form-row">
+              <label for="review_date" class="col-form-label col-md-4">Review Date:</label>
+              <div class="col-md-8">
+                <input type="text" placeholder="review_date" class="form-control" id="review_date" formControlName="review_date" [ngClass]="getFormControlCssClass(newReviewsForm.get('review_date'), newReviewsForm)" />
+                <small class="form-text text-muted">Review Date.</small>
+  
+                <span class="text-danger" *ngIf="getCanShowFormControlErrorMessage('review_date', 'required', newReviewsForm)">{{getFormControlErrorMessage('review_date', 'required')}}</span>
+  
+              </div>
+            </div>
+  
+            <div class="form-group form-row">
+              <label for="rating" class="col-form-label col-md-4">Rating:</label>
+              <div class="col-md-8">
+                <input type="text" placeholder="rating" class="form-control" id="rating" formControlName="rating" [ngClass]="getFormControlCssClass(newReviewsForm.get('rating'), newReviewsForm)" />
+                <small class="form-text text-muted">Give rating between 1-5.</small>
+  
+                <span class="text-danger" *ngIf="getCanShowFormControlErrorMessage('rating', 'required', newReviewsForm)">{{getFormControlErrorMessage('rating', 'required')}}</span>
+  
+                <span class="text-danger" *ngIf="getCanShowFormControlErrorMessage('rating', 'pattern', newReviewsForm)">{{getFormControlErrorMessage('rating', 'pattern')}}</span>
+              </div>
+            </div>
+  
+            <div class="form-group form-row">
+              <label for="review" class="col-form-label col-md-4">Review</label>
+              <div class="col-md-8">
+                <input type="text" placeholder="review" class="form-control" id="review" formControlName="review" [ngClass]="getFormControlCssClass(newReviewsForm.get('review'), newReviewsForm)" />
+                <small class="form-text text-muted">Review given by the user. </small>
+  
+                <span class="text-danger" *ngIf="getCanShowFormControlErrorMessage('review', 'required', newReviewsForm)">{{getFormControlErrorMessage('review', 'required')}}</span>
+  
+                <span class="text-danger" *ngIf="getCanShowFormControlErrorMessage('review', 'minlength', newReviewsForm)">{{getFormControlErrorMessage('review', 'minlength')}}</span>
+
+                <span class="text-danger" *ngIf="getCanShowFormControlErrorMessage('review', 'maxlength', newReviewsForm)">{{getFormControlErrorMessage('review', 'maxlength')}}</span>
+              </div>
+            </div>
+  
+            <div class="form-group form-row">
+              <label for="review_type" class="col-form-label col-md-4">Review Type:</label>
+              <div class="col-md-8">
+                <input type="review_type" placeholder="review_type" class="form-control" id="review_type" formControlName="review_type" [ngClass]="getFormControlCssClass(newReviewsForm.get('review_type'), newReviewsForm)" />
+                <small class="form-text text-muted">What type of review is it?</small>
+  
+                <span class="text-danger" *ngIf="getCanShowFormControlErrorMessage('review_type', 'required', newReviewsForm)">{{getFormControlErrorMessage('review_type', 'required')}}</span>
+  
+              </div>
+            </div>
+
+
+            <div class="form-group form-row">
+                <label for="cafe_id" class="col-form-label col-md-4">Cafe Id</label>
+                <div class="col-md-8">
+                  <input type="cafe_id" placeholder="cafe_id" class="form-control" id="cafe_id" formControlName="cafe_id" [ngClass]="getFormControlCssClass(newReviewsForm.get('cafe_id'), newReviewsForm)" />
+                  <small class="form-text text-muted">What is the cafe Id?</small>
+    
+                  <span class="text-danger" *ngIf="getCanShowFormControlErrorMessage('cafe_id', 'required', newReviewsForm)">{{getFormControlErrorMessage('cafe_id', 'required')}}</span>
+    
+                </div>
+              </div>
+
+
+            <div class="form-group form-row">
+                <label for="cafe_location" class="col-form-label col-md-4">Cafe Location</label>
+                <div class="col-md-8">
+                  <input type="cafe_location" placeholder="cafe_location" class="form-control" id="cafe_location" formControlName="cafe_location" [ngClass]="getFormControlCssClass(newReviewsForm.get('cafe_location'), newReviewsForm)" />
+                  <small class="form-text text-muted">What is the cafe location?</small>
+    
+                  <span class="text-danger" *ngIf="getCanShowFormControlErrorMessage('cafe_location', 'required', newReviewsForm)">{{getFormControlErrorMessage('cafe_location', 'required')}}</span>
+    
+                </div>
+              </div>
+
+
+            <div class="form-group form-row">
+                <label for="item_id" class="col-form-label col-md-4">Item Id</label>
+                <div class="col-md-8">
+                  <input type="item_id" placeholder="item_id" class="form-control" id="item_id" formControlName="item_id" [ngClass]="getFormControlCssClass(newReviewsForm.get('item_id'), newReviewsForm)" />
+                  <small class="form-text text-muted">What is the Item Id?</small>
+    
+                  <span class="text-danger" *ngIf="getCanShowFormControlErrorMessage('item_id', 'required', newReviewsForm)">{{getFormControlErrorMessage('item_id', 'required')}}</span>
+    
+                </div>
+              </div>
+
+
+            <div class="form-group form-row">
+                <label for="item_name" class="col-form-label col-md-4">Item Name</label>
+                <div class="col-md-8">
+                  <input type="item_name" placeholder="item_name" class="form-control" id="item_name" formControlName="item_name" [ngClass]="getFormControlCssClass(newReviewsForm.get('item_name'), newReviewsForm)" />
+                  <small class="form-text text-muted">What is the Item Name?</small>
+    
+                  <span class="text-danger" *ngIf="getCanShowFormControlErrorMessage('item_name', 'required', newReviewsForm)">{{getFormControlErrorMessage('item_name', 'required')}}</span>
+    
+                </div>
+              </div>
+
+
+  
+          </div>
+  
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnAddReviewsCancel">
+              <i class="fa fa-times-circle"></i> Cancel
+            </button>
+            <button type="submit" class="btn btn-success" (click)="onAddReviewsClick($event)" [disabled]="newReviewsDisabled">
+              <span *ngIf="!newReviewsDisabled"><i class="fa fa-save"></i> Save</span>
+              <span *ngIf="newReviewsDisabled"><i class="fa fa-circle-o-notch  fa-spin"></i> Saving</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  
+  
+  
+  <!-- Edit review Modal -->
+  <form [formGroup]="editReviewsForm">
+    <div class="modal fade" id="editReviewsModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-info text-white">
+            <h5 class="modal-title">Update Reviews</h5>
+            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+  
+          <div class="modal-body">
+  
+            <div class="form-group form-row">
+              <label for="review_date" class="col-form-label col-md-4">Review Date:</label>
+              <div class="col-md-8">
+                <input type="text" placeholder="Review Date" class="form-control" id="review_date" formControlName="review_date" [ngClass]="getFormControlCssClass(editReviewsForm.get('review_date'), editReviewsForm)" />
+                <small class="form-text text-muted">Review Date</small>
+  
+                <span class="text-danger" *ngIf="getCanShowFormControlErrorMessage('review_date', 'required', editReviewsForm)">{{getFormControlErrorMessage('review_date', 'required')}}</span>
+  
+              </div>
+            </div>
+  
+            <div class="form-group form-row">
+              <label for="rating" class="col-form-label col-md-4">Rating:</label>
+              <div class="col-md-8">
+                <input type="text" placeholder="rating" class="form-control" id="rating" formControlName="rating" [ngClass]="getFormControlCssClass(editReviewsForm.get('rating'), editReviewsForm)" />
+                <small class="form-text text-muted">Give Rating between 1-5.</small>
+  
+                <span class="text-danger" *ngIf="getCanShowFormControlErrorMessage('rating', 'required', editReviewsForm)">{{getFormControlErrorMessage('rating', 'required')}}</span>
+  
+              </div>
+            </div>
+  
+            <div class="form-group form-row">
+              <label for="review" class="col-form-label col-md-4">Review:</label>
+              <div class="col-md-8">
+                <input type="text" placeholder="review" class="form-control" id="review" formControlName="review" [ngClass]="getFormControlCssClass(editReviewsForm.get('review'), editReviewsForm)" />
+                <small class="form-text text-muted">Write review in 3-40 characters.</small>
+  
+                <span class="text-danger" *ngIf="getCanShowFormControlErrorMessage('review', 'required', editReviewsForm)">{{getFormControlErrorMessage('review', 'required')}}</span>
+                <span class="text-danger" *ngIf="getCanShowFormControlErrorMessage('review', 'minlength', editReviewsForm)">{{getFormControlErrorMessage('review', 'minlength')}}</span>
+  
+                <span class="text-danger" *ngIf="getCanShowFormControlErrorMessage('review', 'maxlength', editReviewsForm)">{{getFormControlErrorMessage('review', 'maxlength')}}</span>
+              </div>
+            </div>
+
+
+            <div class="form-group form-row">
+                <label for="review_type" class="col-form-label col-md-4">Review Type:</label>
+                <div class="col-md-8">
+                  <input type="text" placeholder="review_type" class="form-control" id="review_type" formControlName="review_type" [ngClass]="getFormControlCssClass(editReviewsForm.get('review_type'), editReviewsForm)" />
+                  <small class="form-text text-muted">Write review type.</small>
+    
+                  <span class="text-danger" *ngIf="getCanShowFormControlErrorMessage('review_type', 'required', editReviewsForm)">{{getFormControlErrorMessage('review', 'required')}}</span>
+
+                </div>
+              </div>
+
+
+            <div class="form-group form-row">
+                <label for="cafe_id" class="col-form-label col-md-4">Cafe Id:</label>
+                <div class="col-md-8">
+                  <input type="text" placeholder="cafe_id" class="form-control" id="cafe_id" formControlName="cafe_id" [ngClass]="getFormControlCssClass(editReviewsForm.get('cafe_id'), editReviewsForm)" />
+                  <small class="form-text text-muted">Write the cafe Id.</small>
+    
+                  <span class="text-danger" *ngIf="getCanShowFormControlErrorMessage('cafe_id', 'required', editReviewsForm)">{{getFormControlErrorMessage('cafe_id', 'required')}}</span>
+                </div>
+              </div>
+
+
+            <div class="form-group form-row">
+                <label for="cafe_location" class="col-form-label col-md-4">Cafe Location:</label>
+                <div class="col-md-8">
+                  <input type="text" placeholder="cafe_location" class="form-control" id="cafe_location" formControlName="cafe_location" [ngClass]="getFormControlCssClass(editReviewsForm.get('cafe_location'), editReviewsForm)" />
+                  <small class="form-text text-muted">What is the cafe location.</small>
+    
+                  <span class="text-danger" *ngIf="getCanShowFormControlErrorMessage('cafe_location', 'required', editReviewsForm)">{{getFormControlErrorMessage('cafe_location', 'required')}}</span>
+                </div>
+              </div>
+
+
+            <div class="form-group form-row">
+                <label for="item_id" class="col-form-label col-md-4">Item Id:</label>
+                <div class="col-md-8">
+                  <input type="text" placeholder="item_id" class="form-control" id="item_id" formControlName="item_id" [ngClass]="getFormControlCssClass(editReviewsForm.get('item_id'), editReviewsForm)" />
+                  <small class="form-text text-muted">Write review in 3-40 characters.</small>
+    
+                  <span class="text-danger" *ngIf="getCanShowFormControlErrorMessage('item_id', 'required', editReviewsForm)">{{getFormControlErrorMessage('item_id', 'required')}}</span>
+                </div>
+              </div>
+
+
+            <div class="form-group form-row">
+                <label for="item_name" class="col-form-label col-md-4">Item Name:</label>
+                <div class="col-md-8">
+                  <input type="text" placeholder="item_name" class="form-control" id="item_name" formControlName="item_name" [ngClass]="getFormControlCssClass(editReviewsForm.get('item_name'), editReviewsForm)" />
+                  <small class="form-text text-muted">Write the name of the item.</small>
+    
+                  <span class="text-danger" *ngIf="getCanShowFormControlErrorMessage('item_name', 'required', editReviewsForm)">{{getFormControlErrorMessage('item_name', 'required')}}</span>
+                </div>
+              </div>
+
+  
+          </div>
+  
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnUpdateReviewsCancel">
+              <i class="fa fa-times-circle"></i> Cancel
+            </button>
+            <button type="submit" class="btn btn-success" (click)="onUpdateReviewsClick($event)" [disabled]="editReviewsDisabled">
+              <span *ngIf="!editReviewsDisabled"><i class="fa fa-save"></i> Save</span>
+              <span *ngIf="editReviewsDisabled"><i class="fa fa-circle-o-notch  fa-spin"></i> Saving</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  
+  
+  
+  
+  <!-- Delete Review Modal -->
+  <form [formGroup]="deleteReviewsForm">
+
+    <div class="modal fade" id="deleteReviewsModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-info text-white">
+            <h5 class="modal-title">Delete Review</h5>
+            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+  
+          <div class="modal-body">
+            <h5 class="mb-4">Are you sure to delete this Review?</h5>
+
+            <div class="form-group form-row">
+              <label for="rating_id" class="col-form-label col-md-4">Rating Id:</label>
+              <div class="col-md-8">
+                <input type="text" placeholder="rating_id" readonly="readonly" class="form-control-plaintext" id="rating_id" formControlName="rating_id" />
+              </div>
+            </div>
+  
+            <div class="form-group form-row">
+              <label for="review" class="col-form-label col-md-4">Review:</label>
+              <div class="col-md-8">
+                <input type="text" placeholder="review" readonly="readonly" class="form-control-plaintext" id="review" formControlName="review" />
+              </div>
+            </div>
+
+            <div class="form-group form-row">
+              <label for="review_date" class="col-form-label col-md-4">Review Date:</label>
+              <div class="col-md-8">
+                <input type="text" placeholder="review_date" readonly="readonly" class="form-control-plaintext" id="review_date" formControlName="review_date" />
+              </div>
+            </div>
+  
+          </div>
+  
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnDeleteReviewsCancel">
+              <i class="fa fa-times-circle"></i> Cancel
+            </button>
+            <button type="submit" class="btn btn-danger" (click)="onDeleteReviewsConfirmClick($event)" [disabled]="deleteReviewsDisabled">
+              <span *ngIf="!deleteReviewsDisabled"><i class="fa fa-save"></i> Delete</span>
+              <span *ngIf="deleteReviewsDisabled"><i class="fa fa-circle-o-notch  fa-spin"></i> Deleting</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  
+  
+  

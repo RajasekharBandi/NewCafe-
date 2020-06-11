@@ -1,0 +1,64 @@
+section{
+  position: relative;
+}
+
+.card{
+  margin: 0 auto; /* Added */
+  float: none; /* Added */
+  margin-bottom: 10px; /* Added */
+height: 100px;
+width: 500px;
+opacity: 0.9; 
+}
+.jumbotron {
+  
+  background-image: url("/assets/images/background.jpeg"); 
+  background-size: cover;
+  height: 700px;
+  padding: 0;
+  margin: 0;
+}
+
+.label-1{
+  padding-left: 50px;
+  padding-bottom: 5px;
+}
+.label-11{
+  padding-left: 50px;
+  padding-bottom: 5px;
+}
+
+.label-2{
+  padding-left: 50px;
+  padding-bottom: 5px;
+}
+.label-21{
+  padding-left: 50px;
+  padding-bottom: 5px;
+}
+
+  .child_div_1 {
+    float: left;
+    width: 40%; 
+  }
+  .child_div_2 {
+    float: right;
+    width: 45%;
+  }
+
+  .child_div_7 {
+    padding-top: 5%;
+  float:left;
+}
+  section{
+    position: relative;
+  }
+
+.jumbotron {
+    
+    /* background-image: url("/assets/images/background.jpeg"); */
+    background-size: cover;
+    height: 700px;
+    padding: 0;
+    margin: 0;
+  }
