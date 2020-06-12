@@ -1,4 +1,4 @@
-GitRepositoriesView.GitDirectories=C\:\\Users\\ak290\\CafeProject\\capgeminiCafe\\.git;
-GitRepositoriesView.GitDirectories.relative=capgeminiCafe\\.git;
+GitRepositoriesView.GitDirectories=C\:\\Users\\ak290\\CafeProject\\.git;C\:\\Users\\ak290\\CafeProject\\capgeminiCafe\\.git;
+GitRepositoriesView.GitDirectories.relative=.git;capgeminiCafe\\.git;
 core_autoIgnoreDerivedResources=false
 eclipse.preferences.version=1

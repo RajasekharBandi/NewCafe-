@@ -26,6 +26,11 @@
 		<item key="WizardZipFileResourceExportPage1.STORE_CREATE_STRUCTURE_ID" value="true"/>
 		<item key="WizardZipFileResourceExportPage1.STORE_COMPRESS_CONTENTS_ID" value="true"/>
 		<list key="WizardZipFileResourceExportPage1.STORE_DESTINATION_NAMES_ID">
+			<item value="C:\Users\ak290\Desktop\CodeCheck.zip"/>
+			<item value="C:\Users\ak290\Desktop\Sts054705062020.zip"/>
+			<item value="C:\Users\ak290\Desktop\Sts042605062020.zip"/>
+			<item value="C:\Users\ak290\Desktop\StsBackUp021005062020.zip"/>
+			<item value="C:\Users\ak290\Desktop\StsBackUp06133062020.zip"/>
 			<item value="C:\Users\ak290\Desktop\StsBackUp020203062020.zip"/>
 			<item value="C:\Users\ak290\Desktop\StsBackUp121003062020.zip"/>
 		</list>
