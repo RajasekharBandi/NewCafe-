@@ -17,6 +17,10 @@ export class ShowCafeMenuComponent implements OnInit {
   currentId: number;
   qty: number[] = [];
   price: number[] = [];
+
+
+  childmessage : string = "I am passed from Parent to child component"
+
   constructor(private formBuilder: FormBuilder, private router: Router, private service: CafeMenuService ) { }
 
   ngOnInit() {
@@ -65,9 +69,13 @@ export class ShowCafeMenuComponent implements OnInit {
 
     var totalAmt = (this.qty[0] * this.price[0]) + (this.qty[1] * this.price[1]) + (this.qty[2] * this.price[2]) + (this.qty[3] * this.price[3]) + (this.qty[4] * this.price[4]) + (this.qty[5] * this.price[5]);
     console.log(totalAmt + " Total")
-    this.service.reviewOrderMenu(this.menuList);
-    this.service.reviewOrderQty(this.qty);
-    this.service.reviewOrderPrice(this.price);
+    this.menuList[0].item_id=this.qty[0];
+    this.menuList[1].item_id=this.qty[1];
+    this.menuList[2].item_id=this.qty[2];
+    this.menuList[3].item_id=this.qty[3];
+    this.menuList[4].item_id=this.qty[4];
+    this.menuList[5].item_id=this.qty[5];
+    
     this.router.navigate(['reviewOrdrer'])
 
   }
