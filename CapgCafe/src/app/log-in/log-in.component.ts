@@ -49,18 +49,14 @@ export class LogInComponent implements OnInit {
       localStorage.setItem('empMagicWord', data.empMagicWord);
       localStorage.setItem('empType', data.empType);
 
-      console.log(data.empId + "*****************" + data.empPassword)
-
       if (data.empId == this.data.empId.value && data.empPassword == this.data.empPassword.value) {
         this.service.sendToken(data.empId.toString());
         this.loading = false;
 
         if (data.empType == "ADMIN") {
-          alert("Login successful for Admin id " + data.empId);
           this.router.navigate(['adminDesk'])
         }
         else {
-          alert("Login successful for Employee id " + data.empId);
           this.router.navigate(['home'])
         }
       }

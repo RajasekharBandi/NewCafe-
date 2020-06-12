@@ -1,3 +1,7 @@
+<script src="./src/bootstrap-input-spinner.js"></script>
+<script>
+    $("input[type='number']").inputSpinner()
+</script>
 <div class="jumbotron">
     <br>
     <br>
@@ -28,7 +32,8 @@
                                 <td style="font-weight: bolder;">{{menu.item_name}}</td>
                                 <td>{{menu.item_calories}} Cal</td>
                                 <td>{{menu.item_price | currency:'INR'}}</td>
-                                <td><input style="width: 90%;" type="number" min="0" max="10" ></td>
+                                <td><input value="0" style="width: 90%;" min="0" max="100" step="1" type="number" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"  oninput="validity.valid||(value='0');">
+                                </td>
                             </tr>
                         </tbody>
                     </table>
