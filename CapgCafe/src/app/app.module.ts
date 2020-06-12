@@ -38,6 +38,7 @@ import { DetailsService } from './service/details.service';
 import { OrdersService } from './service/orders.service';
 import { ReviewsService } from './service/reviews.service';
 import { TicketsService } from './service/tickets.service';
+import { ReviewOrderComponent } from './review-order/review-order.component';
 
 
 
@@ -66,7 +67,8 @@ import { TicketsService } from './service/tickets.service';
     SelectLocationComponent,
     PaymentComponent,
     ShowCafeComponent,
-    ShowCafeMenuComponent
+    ShowCafeMenuComponent,
+    ReviewOrderComponent
   ],
   imports: [
     BrowserModule,

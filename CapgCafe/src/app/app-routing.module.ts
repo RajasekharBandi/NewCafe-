@@ -21,6 +21,7 @@ import { SelectLocationComponent } from './select-location/select-location.compo
 import { PaymentComponent } from './payment/payment.component';
 import { ShowCafeComponent } from './show-cafe/show-cafe.component';
 import { ShowCafeMenuComponent } from './show-cafe-menu/show-cafe-menu.component';
+import { ReviewOrderComponent } from './review-order/review-order.component';
 
 
 const routes: Routes = [
@@ -46,7 +47,9 @@ const routes: Routes = [
   { path: 'location', component: SelectLocationComponent },
   { path: 'payment', component: PaymentComponent },
   { path: 'showcafe', component: ShowCafeComponent },
-  { path: 'showmenu/:cafe_id', component: ShowCafeMenuComponent }
+  { path: 'showmenu/:cafe_id', component: ShowCafeMenuComponent },
+  { path: 'reviewOrdrer', component: ReviewOrderComponent },
+
   
 ];
 

@@ -7,6 +7,7 @@ import { CafeMenu } from '../shared/cafeMenu';
     providedIn: 'root'
 })
 export class CafeMenuService {
+
     constructor(private httpClient: HttpClient) {
     }
 
@@ -21,9 +22,23 @@ export class CafeMenuService {
 
 
     getMenuItemsBycafeId(cafe_Id: number): Observable<CafeMenu[]> {
-        return this.httpClient.get<CafeMenu []>("http://localhost:2048/menu/search-Menu-By-Cafe-Id/" + cafe_Id);
+        return this.httpClient.get<CafeMenu[]>("http://localhost:2048/menu/search-Menu-By-Cafe-Id/" + cafe_Id);
     }
-    
+
+    reviewOrderMenu(menuList?: CafeMenu[]) {
+         for (let i of menuList) { console.log(i) }
+        return menuList;
+    }
+
+    reviewOrderQty(qty?: number[]) {
+         for (let j of qty) { console.log(j) }
+        return qty;
+    }
+    reviewOrderPrice(price?: number[]) {
+         for (let k of price) { console.log(k) }
+        return price;
+    }
+
 }
 
 
