@@ -13,40 +13,44 @@
         <!-- <br><br><br><br><br><br><br> -->
         <h4 class="card-header">Select a Menu From your Choosen Cafe...</h4>
         <div class="card-body" class="overflow-auto">
-            <div *ngIf="menuList">
-                <div class="manageTile" cols="2">
-                    <table class="table">
-                        <thead>
-                            <tr style="height: 20px; font-size: large;">
-                                <th scope="col">Peek</th>
-                                <th scope="col">Delicacy</th>
-                                <th scope="col">Calories</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Quantity</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let menu of menuList" style="height: 50px;">
-                                <td><img src="{{menu.item_img_path}}" class="rounded-circle" width="60" height="60">
-                                </td>
-                                <td style="font-weight: bolder;">{{menu.item_name}}</td>
-                                <td>{{menu.item_calories}} Cal</td>
-                                <td>{{menu.item_price | currency:'INR'}}</td>
-                                <td><input value="0" style="width: 90%;" min="0" max="100" step="1" type="number" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"  oninput="validity.valid||(value='0');">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div *ngIf="menuList">
+                    <div class="manageTile" cols="2">
+                        <table class="table">
+                            <thead>
+                                <tr style="height: 20px; font-size: large;">
+                                    <th scope="col">Peek</th>
+                                    <th scope="col">Delicacy</th>
+                                    <th scope="col">Calories</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let menu of menuList; index as i"   style="height: 50px;" class="form-group">
+                                    <td><img src="{{menu.item_img_path}}" class="rounded-circle" width="60" height="60">
+                                    </td>
+                                    <td style="font-weight: bolder;"> {{menu.item_name}} </td>
+                                    <td>{{menu.item_calories}} Cal</td>
+                                    <td>{{menu.item_price | currency:'INR'}}</td>
+                                    <td><input class="form-control" id="{{menu.item_id}}" formControlName="item{{i}}" value="0"
+                                            style="width: 90%;" min="0" max="100" step="1" type="number"
+                                            onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                            oninput="validity.valid||(value='0');">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <div>
 
-                <div class="orderButton" *ngIf="menuList">
-                    <button class="btn btn-primary" routerLink="/home">Cancel</button>
-                    <span> &nbsp;&nbsp;&nbsp;&nbsp; </span>
-                    <button class="btn btn-primary">Order </button> </div>
-
-            </div>
+                <div class="form-group">
+                    <div class="orderButton" *ngIf="menuList">
+                        <button class="btn btn-primary" routerLink="/home">Cancel</button>
+                        <span> &nbsp;&nbsp;&nbsp;&nbsp; </span>
+                        <button type="submit" class="btn btn-primary">Order </button> </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
