@@ -5,10 +5,20 @@
 <!doctype html>
 <html lang="en">
 
+<style>
+  body {
+    background-image: url('../assets/images/bg1.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 600px;
+    margin-top: 10px;
+
+  }
+</style>
 
 <body>
   <div class="row">
-    <div class="col-md-3 col-lg-2 ml-0 pl-0 pt-0 pr-0 border-right left-menu">
+    <div class="col-md-3 col-lg-2 ml-0 pl-3 pt-0 pr-0 border-right left-menu">
       <div class="p-2">
         <h5>
           Orders <span class="badge badge-secondary float-right">{{orders.length}}</span>
@@ -89,6 +99,7 @@
     </div>
 
     <div class="col-md-9 col-lg-10">
+      <!--
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item active" aria-current="page">
@@ -97,10 +108,11 @@
           </li>
         </ol>
       </nav>
+      -->
+
       <table class="table mt-2">
         <thead>
           <tr class="table-secondary">
-            <th *ngIf="viewOrdersCheckBoxes.empId">Employee ID</th>
             <th *ngIf="viewOrdersCheckBoxes.order_id">Order ID</th>
             <th *ngIf="viewOrdersCheckBoxes.payment_type">Payment Type</th>
             <th *ngIf="viewOrdersCheckBoxes.order_date">Order Date</th>
@@ -110,30 +122,32 @@
         </thead>
         <tbody>
           <tr *ngFor="let order of orders; let index = index">
-            <td style="font-size:120%" *ngIf="viewOrdersCheckBoxes.empId">{{order.empId}}</td>
             <td *ngIf="viewOrdersCheckBoxes.order_id">{{order.order_id}}</td>
             <td *ngIf="viewOrdersCheckBoxes.payment_type">{{order.payment_type}}</td>
             <td *ngIf="viewOrdersCheckBoxes.order_date">{{order.order_date}}</td>
             <td *ngIf="viewOrdersCheckBoxes.order_location">{{order.order_location}}</td>
             <td>
               <div class="btn-group">
-                <button class="btn btn-primary" data-toggle="modal" (click)="onViewOrderDetailsClick(index)">Add/View
-                  Items in Order</button>
+                <!-- <button class="btn btn-primary" data-toggle="modal" (click)="onViewOrderDetailsClick(index)">Add/View
+                  Items in Order</button> 
                 <button class="btn btn-secondary" data-toggle="modal" data-target="#editOrdersModal"
-                  (click)="onEditOrdersClick(index)">Edit</button>
-                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteOrdersModal"
-                  (click)="onDeleteOrdersClick(index)">Delete</button>
-                <button class="btn btn-primary" data-toggle="modal" (click)="onRaiseTicketClick(index)">Raise
+                  (click)="onEditOrdersClick(index)">Edit</button> -->
+                <button class="btn btn-danger" data-toggle="modal" [hidden]="buttondiabled" data-target="#deleteOrdersModal"
+                  (click)="onDeleteOrdersClick(index)">Cancel</button>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <button class="btn btn-primary" data-toggle="modal" [hidden]="buttondiabled" (click)="onRaiseTicketClick(index)">Raise
                   Ticket</button>
               </div>
             </td>
           </tr>
         </tbody>
       </table>
+      <!--
       <div class=btn-group>
         <a class="btn btn-primary" data-toggle="modal" href="#newOrdersModal" (click)="onCreateOrdersClick()">Add
           Orders</a>
       </div>
+-->
     </div>
   </div>
 </body>

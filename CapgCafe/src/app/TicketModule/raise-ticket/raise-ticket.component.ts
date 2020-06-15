@@ -38,7 +38,7 @@ export class RaiseTicketComponent extends CafecapgeminiComponentBase implements 
       ticket_number: new FormControl(null),
       order_id: new FormControl(null),
       status: new FormControl(null, [Validators.required]),
-      ticket_date: new FormControl(null, [Validators.required]),
+      ticket_date: new FormControl(null ),
       ticket_location: new FormControl(null, [Validators.required])
     });
 
@@ -132,6 +132,19 @@ export class RaiseTicketComponent extends CafecapgeminiComponentBase implements 
       var ticket: Ticket = this.newTicketForm.value;
       ticket.empId = JSON.parse(localStorage.getItem('empId'));
       ticket.order_id = JSON.parse(localStorage.getItem('order_id'));
+
+      var today = new Date();
+      var date = today.getDate();
+      if(date<10) {
+          date = 0 + date;
+      }
+      var month = today.getMonth() + 1;
+      if(month<10) {
+          month = 0 + month;
+      }
+      var year = today.getFullYear();
+      var current_date = date + '/' + month + '/' + year;
+      ticket.ticket_date = current_date;
 
       this.ticketsService.AddTicket(ticket).subscribe((_addResponse) => {
         this.newTicketForm.reset();

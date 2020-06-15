@@ -9,17 +9,16 @@
 <html lang="en">
 <style>
   body {
-    background-image: url('../assets/images/raiseTicket.png');
+    background-image: url('../assets/images/bg2.jpg');
     background-repeat: no-repeat;
     background-position: center;
-    margin-left: 30px;
     margin-top: 10px;
 
   }
 </style>
 <body>
 <div class="row">
-    <div class="col-md-3 col-lg-2 ml-0 pl-0 pt-0 pr-0 border-right left-menu">
+    <div class="col-md-3 col-lg-2 ml-0 pl-3 pt-0 pr-0 border-right left-menu">
       <div class="p-2">
         <h5>
           Reviews <span class="badge badge-secondary float-right" *ngIf="reviews.length > 0">{{reviews.length}}</span>
@@ -147,19 +146,12 @@
   
   
     <div class="col-md-9 col-lg-10">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item active" aria-current="page">
-            Reviews
-            <i class="fa fa-circle-o-notch  fa-spin" *ngIf="showReviewsSpinner"></i>
-          </li>
-        </ol>
-      </nav>
+      
   
       <table class="table mt-2">
         <thead>
           <tr class="table-secondary">
-            <th *ngIf="viewReviewsCheckBoxes.empId">Employee Id</th>
+
             <th *ngIf="viewReviewsCheckBoxes.review_date">Review Date</th>
             <th *ngIf="viewReviewsCheckBoxes.rating">Rating</th>
             <th *ngIf="viewReviewsCheckBoxes.review">Review</th>
@@ -175,7 +167,7 @@
   
         <tbody>
           <tr *ngFor="let review of reviews; let index = index">
-            <td style="font-size:120%" *ngIf="viewReviewsCheckBoxes.review_date">{{review.empId}}</td>
+
             <td style="font-size:120%" *ngIf="viewReviewsCheckBoxes.review_date">{{review.review_date}}</td>
             <td *ngIf="viewReviewsCheckBoxes.rating">{{review.rating}}</td>
             <td *ngIf="viewReviewsCheckBoxes.review">{{review.review}}</td>

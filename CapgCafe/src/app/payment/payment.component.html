@@ -6,7 +6,7 @@
     <br>
     <br>
 
-    <div class="card" style="height:25rem; width: 32rem;">
+    <div class="card" style="height:22rem; width: 25rem;">
         <h4 class="card-header">Payment</h4>
 
         <div class="card-body">
@@ -14,19 +14,22 @@
             <div>
                 <div>
                     <label class="paymentLabel">UPI</label>
-                    <button class="paymentButton" class="btn btn-primary" routerLink="/home">Pay Now</button>
+                    <button class="paymentButton" class="btn btn-primary" (click)="payByUPI()">Pay Now</button>
                 </div>
+                <br>
                 <div>
                     <label class="paymentLabel">Credit Card</label>
-                    <button class="paymentButton" class="btn btn-primary" routerLink="/home">Pay Now</button>
+                    <button class="paymentButton" class="btn btn-primary" (click)="payByCreditCard()">Pay Now</button>
                 </div>
+                <br>
                 <div>
                     <label class="paymentLabel">Debit Card</label>
-                    <button class="paymentButton" class="btn btn-primary" routerLink="/home">Pay Now</button>
+                    <button class="paymentButton" class="btn btn-primary" (click)="payByDebitCard()" >Pay Now</button>
                 </div>
+                <br>
                 <div>
                     <label class="paymentLabel">Meal Card</label>
-                    <button class="paymentButton" class="btn btn-primary" routerLink="/home">Pay Now</button>
+                    <button class="paymentButton" class="btn btn-primary" (click)="payByMealCard()" >Pay Now</button>
                 </div>
             </div>
 

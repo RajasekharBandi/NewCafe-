@@ -8,10 +8,10 @@
 <html lang="en">
 <style>
   body {
-    background-image: url('../assets/images/raiseTicket.png');
+    background-image: url('../assets/images/bg1.jpg');
     background-repeat: no-repeat;
     background-position: center;
-    margin-left: 30px;
+  
     margin-top: 10px;
 
   }
@@ -19,7 +19,7 @@
 
 <body>
   <div class="row">
-    <div class="col-md-3 col-lg-2 ml-0 pl-0 pt-0 pr-0 border-right left-menu">
+    <div class="col-md-3 col-lg-2 ml-0 pl-3 pt-0 pr-0 border-right left-menu">
       <div class="p-2">
         <h5>
           Tickets <span class="badge badge-secondary float-right">{{tickets.length}}</span>
@@ -96,6 +96,7 @@
     </div>
 
     <div class="col-md-9 col-lg-10">
+      <!--
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item active" aria-current="page">
@@ -104,13 +105,14 @@
           </li>
         </ol>
       </nav>
+    -->
       <!--<h4>Distributors </h4>-->
       <!--<button class="btn btn-primary" data-toggle="modal" data-target="#newDistributorModal" (click)="onCreateDistributorClick()">Create Distributor</button>-->
       <table class="table mt-2">
         <thead>
           <tr class="table-secondary">
 
-            <th *ngIf="viewTicketCheckBoxes.order_id">Employee Id</th>
+           
             <th *ngIf="viewTicketCheckBoxes.order_id">Order Id</th>
             <th *ngIf="viewTicketCheckBoxes.status">Status</th>
             <th *ngIf="viewTicketCheckBoxes.ticket_date">Ticket Date</th>
@@ -121,7 +123,6 @@
         <tbody>
           <tr *ngFor="let ticket of tickets; let index = index">
 
-            <td style="font-size:120%" *ngIf="viewTicketCheckBoxes.order_id">{{ticket.empId}}</td>
             <td style="font-size:120%" *ngIf="viewTicketCheckBoxes.order_id">{{ticket.order_id}}</td>
             <td *ngIf="viewTicketCheckBoxes.status">{{ticket.status}}</td>
             <td *ngIf="viewTicketCheckBoxes.ticket_date">{{ticket.ticket_date}}</td>
@@ -169,19 +170,7 @@
             </div>
           </div>
 
-          <div class="form-group form-row">
-            <label for="ticket_date" class="col-form-label col-md-4">Ticket Date:</label>
-            <div class="col-md-8">
-              <input type="text" placeholder="ticket date" class="form-control" id="ticket_date"
-                formControlName="ticket_date"
-                [ngClass]="getFormControlCssClass(newTicketForm.get('ticket_date'), newTicketForm)" />
-              <small class="form-text text-muted">Date of Raising the Ticket</small>
-              <span class="text-danger"
-                *ngIf="getCanShowFormControlErrorMessage('ticket_date', 'required', newTicketForm)">{{getFormControlErrorMessage('ticket_date', 'required')}}</span>
-              <span class="text-danger"
-                *ngIf="getCanShowFormControlErrorMessage('ticket_date', 'Date', newTicketForm)">{{getFormControlErrorMessage('ticket_date', 'Date')}}</span>
-            </div>
-          </div>
+          
           <div class="form-group form-row">
             <label for="ticket_location" class="col-form-label col-md-4">Ticket Location:</label>
             <div class="col-md-8">

@@ -30,6 +30,7 @@ export class OrdersComponent implements OnInit {
 
     deleteOrderForm: FormGroup;
     deleteOrderDisabled: boolean = false;
+    buttondiabled: boolean;
 
     constructor(private ordersService: OrdersService, private router: Router) {
         // super();
@@ -83,6 +84,7 @@ export class OrdersComponent implements OnInit {
             this.ordersService.GetAllOrders().subscribe((response) => {
                 if (response != null && response.length > 0) {
                     this.orders = response;
+                    this.buttondiabled=true;
                 }
                 this.showOrdersSpinner = false;
             }, (error) => {
@@ -145,9 +147,7 @@ export class OrdersComponent implements OnInit {
                     this.newOrdersDisabled = false;
                 });
         }
-        // else {
-        //     super.getFormGroupErrors(this.newOrdersForm);
-        // }
+        
     }
 
     onViewOrderDetailsClick(index) {
