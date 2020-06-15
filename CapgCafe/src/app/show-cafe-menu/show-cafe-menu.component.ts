@@ -17,6 +17,7 @@ export class ShowCafeMenuComponent implements OnInit {
   currentId: number;
   qty: number[] = [];
   price: number[] = [];
+  totalAmt:number;
 
 
   childmessage : string = "I am passed from Parent to child component"
@@ -60,15 +61,7 @@ export class ShowCafeMenuComponent implements OnInit {
     this.qty[3] = this.htmlData.item3.value;
     this.qty[4] = this.htmlData.item4.value;
     this.qty[5] = this.htmlData.item5.value;
-    this.price[0] = +this.menuList[0].item_price;
-    this.price[1] = +this.menuList[1].item_price;
-    this.price[2] = +this.menuList[2].item_price;
-    this.price[3] = +this.menuList[3].item_price;
-    this.price[4] = +this.menuList[4].item_price;
-    this.price[5] = +this.menuList[5].item_price;
-
-    var totalAmt = (this.qty[0] * this.price[0]) + (this.qty[1] * this.price[1]) + (this.qty[2] * this.price[2]) + (this.qty[3] * this.price[3]) + (this.qty[4] * this.price[4]) + (this.qty[5] * this.price[5]);
-    console.log(totalAmt + " Total")
+    
     this.menuList[0].item_id=this.qty[0];
     this.menuList[1].item_id=this.qty[1];
     this.menuList[2].item_id=this.qty[2];
@@ -76,6 +69,7 @@ export class ShowCafeMenuComponent implements OnInit {
     this.menuList[4].item_id=this.qty[4];
     this.menuList[5].item_id=this.qty[5];
     
+    this.service.finalOrder(this.menuList);
     this.router.navigate(['reviewOrdrer'])
 
   }

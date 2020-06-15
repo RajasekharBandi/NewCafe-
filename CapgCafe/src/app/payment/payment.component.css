@@ -22,9 +22,16 @@
     padding-right: 5%;
     }
     
-    .orderButton{
+    .paymentButton{
       float: right;
-      padding-left: 110px;
       padding-right: 10%;
       padding-bottom: 20px;
       }
+
+      .paymentLabel{
+        font-weight: bolder;
+        float: left;
+        padding-left: 20%;
+        padding-right: 10%;
+        padding-bottom: 20px;
+        }

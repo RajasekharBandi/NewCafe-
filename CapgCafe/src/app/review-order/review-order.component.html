@@ -9,47 +9,49 @@
     <br>
 
 
-    <div class="card" style="height:35rem; width: 37rem;">
+    <div class="card" style="height:35rem; width: 39rem;">
         <!-- <br><br><br><br><br><br><br> -->
-        <h4 class="card-header">Select a Menu From your Choosen Cafe...</h4>
+        <h4 class="card-header">Review Your Order</h4>
         <div class="card-body" class="overflow-auto">
-            <form >
-                <div >
-                    <div class="manageTile" cols="2">
-                        <table class="table">
-                            <thead>
-                                <tr style="height: 20px; font-size: large;">
-                                    <th scope="col">Peek</th>
-                                    <th scope="col">Delicacy</th>
-                                    <th scope="col">Calories</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Quantity</th>
-                                    <th scope="col">Total</th>
-                                    
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let menu of menuList; index as i"   style="height: 50px;" >
-                                    <td><img src="{{menu.item_img_path}}" class="rounded-circle" width="60" height="60">
-                                    </td>
-                                    <td style="font-weight: bolder;"> {{menu.item_name}} </td>
-                                    <td>{{menu.item_calories}} Cal</td>
-                                    <td>{{menu.item_price | currency:'INR'}}</td>
-                                    <td>{{menu.item_id }}</td>
-                                    <td>{{menu.item_price}} * {{menu.item_id }}</td>                                    
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
 
-                <div class="form-group">
-                    <div class="orderButton" *ngIf="menuList">
-                        <button class="btn btn-primary" routerLink="/home">Cancel</button>
-                        <span> &nbsp;&nbsp;&nbsp;&nbsp; </span>
-                        <button type="submit" class="btn btn-primary">Place Order </button> </div>
+            <div *ngIf="menuList">
+                <div class="manageTile" cols="2">
+                    <table class="table">
+                        <thead>
+                            <tr style="height: 20px; font-size: large;">
+                                <th scope="col">Peek</th>
+                                <th scope="col">Delicacy</th>
+                                <th scope="col">Calories</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">SubTotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let menu of finalOrder; index as i" style="height: 50px;">
+                                <td><img src="{{menu.item_img_path}}" class="rounded-circle" width="60" height="60">
+                                </td>
+                                <td style="font-weight: bolder;"> {{menu.item_name}} </td>
+                                <td>{{menu.item_calories}} Cal</td>
+                                <td>{{menu.item_price | currency:'INR'}}</td>
+                                <td>{{menu.item_id}}</td>
+                                <td>{{menu.item_id  * menu.item_price | currency:'INR'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </form>
+            </div>
+            <div>
+                <label class="label1">Total Amount</label>
+                <label class="label2">{{totalAmt}}</label>
+            </div>
+            <div>
+                <div class="orderButton">
+                    <button class="btn btn-primary" routerLink="/home">Cancel</button>
+                    <span> &nbsp;&nbsp;&nbsp;&nbsp; </span>
+                    <button class="btn btn-primary" *ngIf="payment()" routerLink="/payment">Payment </button> </div>
+            </div>
+            
         </div>
     </div>
 </div>

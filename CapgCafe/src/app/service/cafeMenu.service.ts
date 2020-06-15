@@ -8,6 +8,9 @@ import { CafeMenu } from '../shared/cafeMenu';
 })
 export class CafeMenuService {
 
+    
+
+    orderDetails: CafeMenu[] = [];  
     constructor(private httpClient: HttpClient) {
     }
 
@@ -23,6 +26,14 @@ export class CafeMenuService {
 
     getMenuItemsBycafeId(cafe_Id: number): Observable<CafeMenu[]> {
         return this.httpClient.get<CafeMenu[]>("http://localhost:2048/menu/search-Menu-By-Cafe-Id/" + cafe_Id);
+    }
+
+    finalOrder(order?: CafeMenu[]) {
+        this.orderDetails = order;
+    }
+
+    getFinalOrder(): CafeMenu[]{
+        return this.orderDetails;
     }
 
 }
