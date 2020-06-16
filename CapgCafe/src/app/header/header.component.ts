@@ -13,6 +13,10 @@ export class HeaderComponent implements OnInit {
   constructor( public service:AuthenticationService) { }
 
   ngOnInit(): void {
+
+  //var currUser=  this.service.currentUser();
+  //console.log(currUser+"----------")
+  
   }
 
 }

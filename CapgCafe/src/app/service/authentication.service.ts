@@ -7,7 +7,21 @@ import { Employee } from '../shared/employee';
   providedIn: 'root'
 })
 export class AuthenticationService {
+
+  currUser : boolean = false;
   constructor(private http:HttpClient) { }
+
+  customer() {
+    this.currUser=true;
+  }
+  admin() {
+    this.currUser=false;
+  }
+
+  showLetsOrder(){
+    return this.currUser;
+  }
+
 
 
   sendToken(token: string) {

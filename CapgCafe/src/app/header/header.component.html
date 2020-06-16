@@ -38,16 +38,16 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-
           <ul class="navbar-nav ml-auto">
-
             <li class="nav-item ">
               <a class="nav-link" href="#">Home
                 <!-- <span class="sr-only">(current)</span> -->
               </a>
             </li>
-            <li class="nav-item">
-              <a *ngIf="service.isLoggedIn()" class="nav-link" routerLink="/location">Let's Order</a>
+            <li class="nav-item" >
+              <a *ngIf="service.isLoggedIn()"  class="nav-link" routerLink="/location">Let's Order</a>
+<!--               
+              <a *ngIf="service.showLetsOrder()"  class="nav-link" routerLink="/location">Let's Order</a> -->
             </li>
             <li class="nav-item">
               <a class="nav-link" [routerLink]=" [ '/orders', 'orders'  ] " [routerLinkActive]="['active']"
@@ -59,10 +59,6 @@
             </li>
 
 
-            <li class="nav-item">
-              <a class="nav-link" [routerLink]=" [ '/ticket' , 'reviews' ] " [routerLinkActive]="['active']"
-                *ngIf="service.isLoggedIn()">Reviews</a>
-            </li>
             <li class="nav-item">
               <a class="nav-link" routerLink="/contact">Contact</a>
             </li>

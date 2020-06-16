@@ -31,6 +31,8 @@ export class RaiseTicketComponent extends CafecapgeminiComponentBase implements 
   deleteTicketForm: FormGroup;
   deleteTicketDisabled: boolean = false;
 
+  buttonDisabled : boolean = false;
+
   constructor(private ticketsService: TicketsService, private route: ActivatedRoute) {
     super();
     this.newTicketForm = new FormGroup({
@@ -95,9 +97,11 @@ export class RaiseTicketComponent extends CafecapgeminiComponentBase implements 
     var empId: number = JSON.parse(localStorage.getItem('empId'));
     var empType: string = localStorage.getItem('empType');
     if (empType == "ADMIN") {
+
       this.ticketsService.GetAllTickets().subscribe((response) => {
         if (response != null && response.length > 0) {
           this.tickets = response;
+          this.buttonDisabled = true;
         }
         this.showTicketsSpinner = false;
       }, (error) => {
@@ -229,8 +233,6 @@ export class RaiseTicketComponent extends CafecapgeminiComponentBase implements 
       super.getFormGroupErrors(this.editTicketForm);
     }
   }
-
-
 
   onDeleteTicketClick(index) {
     this.deleteTicketForm.reset();

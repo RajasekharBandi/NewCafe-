@@ -131,7 +131,7 @@
             
             <th *ngIf="viewTicketCheckBoxes.ticket_date">Ticket Date</th>
             <th *ngIf="viewTicketCheckBoxes.ticket_location">Ticket Location</th>
-            <th class="text-secondary">Actions</th>
+            <th class="text-secondary" >Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -145,9 +145,9 @@
             <td *ngIf="viewTicketCheckBoxes.ticket_location">{{ticket.ticket_location}}</td>
             <td>
               <div class="btn-group">
-                <button class="btn btn-secondary" data-toggle="modal" data-target="#editTicketModal"
+                <button class="btn btn-secondary" data-toggle="modal"  data-target="#editTicketModal"
                   (click)="onEditTicketClick(index)">Edit</button>
-                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteTicketModal"
+                <button class="btn btn-danger" data-toggle="modal" [hidden]="buttonDisabled" data-target="#deleteTicketModal"
                   (click)="onDeleteTicketClick(index)">Delete</button>
               </div>
             </td>

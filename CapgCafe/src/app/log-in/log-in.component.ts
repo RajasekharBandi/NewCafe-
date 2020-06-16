@@ -54,9 +54,11 @@ export class LogInComponent implements OnInit {
         this.loading = false;
 
         if (data.empType == "ADMIN") {
+          this.service.admin();
           this.router.navigate(['adminDesk'])
         }
         else {
+          this.service.customer();
           this.router.navigate(['home'])
         }
       }

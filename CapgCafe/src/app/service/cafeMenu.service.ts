@@ -7,8 +7,7 @@ import { CafeMenu } from '../shared/cafeMenu';
     providedIn: 'root'
 })
 export class CafeMenuService {
-
-    
+   
 
     orderDetails: CafeMenu[] = [];  
     constructor(private httpClient: HttpClient) {
