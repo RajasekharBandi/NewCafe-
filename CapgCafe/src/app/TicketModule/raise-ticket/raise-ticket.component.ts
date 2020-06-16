@@ -15,7 +15,7 @@ export class RaiseTicketComponent extends CafecapgeminiComponentBase implements 
   tickets: Ticket[] = [];
   showTicketsSpinner: boolean = false;
   viewTicketCheckBoxes: any;
-  tickets1: Ticket = new Ticket(0, 0, null, null, null, 0);
+  tickets1: Ticket = new Ticket(0, 0, null, null, null, 0,null);
 
   sortBy: string = "order_id";
   sortDirection: string = "ASC";
@@ -38,6 +38,7 @@ export class RaiseTicketComponent extends CafecapgeminiComponentBase implements 
       ticket_number: new FormControl(null),
       order_id: new FormControl(null),
       status: new FormControl(null, [Validators.required]),
+      query: new FormControl(null, [Validators.required]),
       ticket_date: new FormControl(null ),
       ticket_location: new FormControl(null, [Validators.required])
     });
@@ -46,6 +47,8 @@ export class RaiseTicketComponent extends CafecapgeminiComponentBase implements 
       order_id: { required: "Order Id can't be blank" },
       empId: { required: "Employee Id can't be blank" },
       status: { required: "Status can't be blank" },
+      
+      query: { required: "Query can't be blank" },
       ticket_date: { required: "date can't be blank" },
       ticket_location: { required: "Password can't be blank" }
     };
@@ -57,6 +60,7 @@ export class RaiseTicketComponent extends CafecapgeminiComponentBase implements 
       empId: new FormControl(null),
       order_id: new FormControl(null),
       status: new FormControl(null, [Validators.required]),
+      query: new FormControl(null, [Validators.required]),
       ticket_date: new FormControl(null, [Validators.required]),
       ticket_location: new FormControl(null, [Validators.required])
 
@@ -66,6 +70,7 @@ export class RaiseTicketComponent extends CafecapgeminiComponentBase implements 
       order_id: { required: "Order Id can't be blank" },
       empId: { required: "Status can't be blank" },
       status: { required: "Status can't be blank" },
+      query: { required: "Query can't be blank" },
       ticket_date: { required: "date can't be blank" },
       ticket_location: { required: "Password can't be blank" }
     };
@@ -73,6 +78,7 @@ export class RaiseTicketComponent extends CafecapgeminiComponentBase implements 
     this.viewTicketCheckBoxes = {
       order_id: true,
       status: true,
+      query: true,
       ticket_date: true,
       ticket_location: true
     };
@@ -83,16 +89,6 @@ export class RaiseTicketComponent extends CafecapgeminiComponentBase implements 
       status: new FormControl(null)
     });
   }
-
-  // ngOnInit() {
-  //   this.showTicketsSpinner = true;
-  //   this.ticketsService.GetAllTickets().subscribe((response) => {
-  //     this.tickets = response;
-  //     this.showTicketsSpinner = false;
-  //   }, (error) => {
-  //       console.log(error);
-  //     })
-  // }
 
   ngOnInit() {
     this.showTicketsSpinner = true;
@@ -199,6 +195,7 @@ export class RaiseTicketComponent extends CafecapgeminiComponentBase implements 
       empId: this.tickets[index].ticket_number,
       order_id: this.tickets[index].order_id,
       status: this.tickets[index].status,
+      query: this.tickets[index].query,
       ticket_date: this.tickets[index].ticket_date,
       ticket_location: this.tickets[index].ticket_location
     });

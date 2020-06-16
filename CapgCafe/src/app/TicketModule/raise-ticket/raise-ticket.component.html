@@ -45,6 +45,16 @@
             Status
           </label>
         </div>
+
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="viewQuery" [(ngModel)]="viewTicketCheckBoxes.query">
+          <label class="form-check-label" for="viewQuery">
+            Query
+          </label>
+        </div>
+
+
         <div class="form-check">
           <input class="form-check-input" type="checkbox" id="viewTicketDate"
             [(ngModel)]="viewTicketCheckBoxes.ticket_date">
@@ -73,6 +83,8 @@
           <select class="form-control" [(ngModel)]="sortBy">
             <option value="order_id">Order Id</option>
             <option value="status">Status</option>
+            <option value="query">Query</option>
+      
             <option value="ticket_date">Ticket Date</option>
             <option value="ticket_location">Ticket Location</option>
           </select>
@@ -115,6 +127,8 @@
            
             <th *ngIf="viewTicketCheckBoxes.order_id">Order Id</th>
             <th *ngIf="viewTicketCheckBoxes.status">Status</th>
+            <th *ngIf="viewTicketCheckBoxes.query">Query</th>
+            
             <th *ngIf="viewTicketCheckBoxes.ticket_date">Ticket Date</th>
             <th *ngIf="viewTicketCheckBoxes.ticket_location">Ticket Location</th>
             <th class="text-secondary">Actions</th>
@@ -125,6 +139,8 @@
 
             <td style="font-size:120%" *ngIf="viewTicketCheckBoxes.order_id">{{ticket.order_id}}</td>
             <td *ngIf="viewTicketCheckBoxes.status">{{ticket.status}}</td>
+            <td *ngIf="viewTicketCheckBoxes.query">{{ticket.query}}</td>
+            
             <td *ngIf="viewTicketCheckBoxes.ticket_date">{{ticket.ticket_date}}</td>
             <td *ngIf="viewTicketCheckBoxes.ticket_location">{{ticket.ticket_location}}</td>
             <td>
@@ -170,6 +186,17 @@
             </div>
           </div>
 
+          <div class="form-group form-row">
+            <label for="query" class="col-form-label col-md-4">Ticket Query:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="ticket query" class="form-control" id="query"
+                formControlName="query"
+                [ngClass]="getFormControlCssClass(newTicketForm.get('query'), newTicketForm)" />
+              <small class="form-text text-muted">Write Query </small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('query', 'required', newTicketForm)">{{getFormControlErrorMessage('query', 'required')}}</span>
+            </div>
+          </div>
           
           <div class="form-group form-row">
             <label for="ticket_location" class="col-form-label col-md-4">Ticket Location:</label>
@@ -182,17 +209,6 @@
                 *ngIf="getCanShowFormControlErrorMessage('ticket_location', 'required', newTicketForm)">{{getFormControlErrorMessage('ticket_location', 'required')}}</span>
             </div>
           </div>
-
-          <!-- <div class="form-group form-row">
-            <label for="order_id" class="col-form-label col-md-4">Order Id: </label>
-            <div class="col-md-8">
-              <input type="text" placeholder="Order Id" class="form-control" id="order_id" formControlName="order_id"
-                [ngClass]="getFormControlCssClass(newTicketForm.get('order_id'), newTicketForm)" />
-              <small class="form-text text-muted">Order Id</small>
-              <span class="text-danger"
-                *ngIf="getCanShowFormControlErrorMessage('order_id', 'required', newTicketForm)">{{getFormControlErrorMessage('order_id', 'required')}}</span>
-            </div>
-          </div> -->
 
         </div>
         <div class="modal-footer">
@@ -244,6 +260,18 @@
            <small class="form-text text-muted">Resolved/Unresolved</small>
               <span class="text-danger"
                 *ngIf="getCanShowFormControlErrorMessage('status', 'required', editTicketForm)">{{getFormControlErrorMessage('status', 'required')}}</span>
+            </div>
+          </div>
+
+          <div class="form-group form-row">
+            <label for="query" class="col-form-label col-md-4">Query:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="query" class="form-control" id="query"
+                formControlName="query"
+                [ngClass]="getFormControlCssClass(editTicketForm.get('query'), editTicketForm)" />
+              <small class="form-text text-muted">Query</small>
+              <span class="text-danger"
+                *ngIf="getCanShowFormControlErrorMessage('query', 'required', editTicketForm)">{{getFormControlErrorMessage('query', 'required')}}</span>
             </div>
           </div>
 

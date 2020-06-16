@@ -9,44 +9,30 @@ import { CafeMenu } from '../shared/cafeMenu';
   styleUrls: ['./review-order.component.css']
 })
 export class ReviewOrderComponent implements OnInit {
-  
 
   qty: number[] = [];
   price: number[] = [];
   @Input() menuList: CafeMenu[] = [];
   finalOrder: CafeMenu[] = [];
-  totalAmt : number;
+  totalAmt: number;
   constructor(private router: Router, private service: CafeMenuService) { }
 
-
-  //@Input()
-  //set menuLists(menuList : CafeMenu[] ){
-   //   this.menuList = menuList; 
-  //}
-  //get menuLists(){
-    //  return this.menuList;
-  //}
-
-  
   ngOnInit() {
-     this.getfinalOrder();
+    this.getfinalOrder();
   }
 
-  getfinalOrder(){
+  getfinalOrder() {
     this.finalOrder = this.service.getFinalOrder();
-    this.totalAmt = (this.finalOrder[0].item_price * this.finalOrder[0].item_id)+(this.finalOrder[1].item_price * this.finalOrder[1].item_id)+(this.finalOrder[2].item_price * this.finalOrder[2].item_id)+
-    (this.finalOrder[3].item_price * this.finalOrder[3].item_id)+(this.finalOrder[4].item_price * this.finalOrder[4].item_id)+(this.finalOrder[5].item_price * this.finalOrder[5].item_id);
-     
-    console.log(this.totalAmt)
-     console.log(this.finalOrder)
+    this.totalAmt = (this.finalOrder[0].item_price * this.finalOrder[0].item_id) + (this.finalOrder[1].item_price * this.finalOrder[1].item_id) + (this.finalOrder[2].item_price * this.finalOrder[2].item_id) +
+      (this.finalOrder[3].item_price * this.finalOrder[3].item_id) + (this.finalOrder[4].item_price * this.finalOrder[4].item_id) + (this.finalOrder[5].item_price * this.finalOrder[5].item_id);
   }
 
-  payment(){
+  payment() {
 
-    if(this.totalAmt>0){
+    if (this.totalAmt > 0) {
       return true;
     }
-    else{
+    else {
       return false;
     }
   }

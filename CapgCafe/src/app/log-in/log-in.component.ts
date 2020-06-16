@@ -33,7 +33,6 @@ export class LogInComponent implements OnInit {
   get data() { return this.form.controls; }
 
   onSubmit() {
-    console.log(this.data)
     this.submitted = true;
     // stop here if form is invalid
     if (this.form.invalid) {

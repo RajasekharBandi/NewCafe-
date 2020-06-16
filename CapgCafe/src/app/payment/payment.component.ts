@@ -25,27 +25,21 @@ export class PaymentComponent implements OnInit {
     this.finalOrder = this.cMService.getFinalOrder();
     this.totalAmt = (this.finalOrder[0].item_price * this.finalOrder[0].item_id)+(this.finalOrder[1].item_price * this.finalOrder[1].item_id)+(this.finalOrder[2].item_price * this.finalOrder[2].item_id)+
     (this.finalOrder[3].item_price * this.finalOrder[3].item_id)+(this.finalOrder[4].item_price * this.finalOrder[4].item_id)+(this.finalOrder[5].item_price * this.finalOrder[5].item_id);
-     
-    console.log(this.totalAmt)
   }
 
  payByMealCard(){
-    console.log("MealCard")
     this.payment="Meal Card";
     this.addOrder();
   }
   payByDebitCard(){
-    console.log("DebitCard")
     this.payment="Debit Card";
     this.addOrder();
   }
   payByCreditCard(){
-    console.log("CreditCard")
     this.payment="Credit Card";
     this.addOrder();
   }
   payByUPI(){
-    console.log("UPI")
     this.payment="UPI";
     this.addOrder();
   }

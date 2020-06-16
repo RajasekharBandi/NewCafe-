@@ -117,6 +117,8 @@
             <th *ngIf="viewOrdersCheckBoxes.payment_type">Payment Type</th>
             <th *ngIf="viewOrdersCheckBoxes.order_date">Order Date</th>
             <th *ngIf="viewOrdersCheckBoxes.order_location">Order Location</th>
+            <th *ngIf="viewOrdersCheckBoxes.order_location">Total Payment</th>
+            
             <th class="text-secondary">Actions</th>
           </tr>
         </thead>
@@ -126,6 +128,7 @@
             <td *ngIf="viewOrdersCheckBoxes.payment_type">{{order.payment_type}}</td>
             <td *ngIf="viewOrdersCheckBoxes.order_date">{{order.order_date}}</td>
             <td *ngIf="viewOrdersCheckBoxes.order_location">{{order.order_location}}</td>
+            <td >{{order.total_amount}}</td>
             <td>
               <div class="btn-group">
                 <!-- <button class="btn btn-primary" data-toggle="modal" (click)="onViewOrderDetailsClick(index)">Add/View

@@ -7,20 +7,20 @@ import { Orders } from '../shared/orders';
     providedIn: 'root'
 })
 export class OrdersService {
+    private baseUrl = 'http://localhost:2048/updateOrders';
     constructor(private httpClient: HttpClient) {
     }
 
-    AddOrder(orders: Orders): Observable<boolean> {
-        console.log(orders);
-        return this.httpClient.post<boolean>('http://localhost:2048/addOrders', orders);
+    AddOrder(orders: Orders): Observable<any> {
+        return this.httpClient.post("http://localhost:2048/addOrders", orders);
     }
-    private baseUrl = 'http://localhost:2048/updateOrders';
+
+
     UpdateOrder(orders: Orders, order_id: number): Observable<boolean> {
         return this.httpClient.put<boolean>(`${this.baseUrl}/${order_id}`, orders);
     }
 
     DeleteOrder(Order_id: number): Observable<boolean> {
-
         return this.httpClient.delete<boolean>("http://localhost:2048/deleteOrders/" + Order_id);
     }
 
